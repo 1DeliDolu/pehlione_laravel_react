@@ -1,4 +1,4 @@
-````markdown
+
 Service Container  
 Giriş  
 Laravel service container, sınıf bağımlılıklarını yönetmek ve bağımlılık enjeksiyonu (dependency injection) gerçekleştirmek için güçlü bir araçtır. Bağımlılık enjeksiyonu, temel olarak şu anlama gelir: sınıf bağımlılıkları, sınıfa constructor veya bazı durumlarda “setter” metotları aracılığıyla “enjeksiyon” yapılır.  
@@ -75,8 +75,8 @@ Birincisi, bir interface uygulayan bir sınıf yazarsanız ve bu interface’i b
 
 İkincisi, diğer Laravel geliştiricileriyle paylaşmayı planladığınız bir Laravel paketi yazıyorsanız, paketinizin servislerini container’a bağlamanız gerekebilir.
 
-````markdown
-Binding  
+
+## Binding
 Binding Temelleri  
 Basit Binding’ler  
 Service container binding’lerinin neredeyse tamamı service provider’lar içinde kaydedilir, bu yüzden örneklerin çoğu container’ın bu bağlamda nasıl kullanıldığını gösterecektir.  
