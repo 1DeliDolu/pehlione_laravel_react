@@ -1,3 +1,4 @@
+import { index as docsIndex } from '@/routes/docs';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -31,7 +32,7 @@ const footerNavItems: NavItem[] = [
     },
     {
         title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
+        href: docsIndex(),
         icon: BookOpen,
     },
 ];
@@ -60,4 +61,7 @@ export function AppSidebar() {
         </Sidebar>
     );
 }
+
+
+
 

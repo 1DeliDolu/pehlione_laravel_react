@@ -1,3 +1,4 @@
+import { index as docsIndex } from '@/routes/docs';
 import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu, X } from 'lucide-react';
@@ -19,6 +20,7 @@ const primaryLinks: NavItem[] = [
     { label: 'About', href: '/about' },
     { label: 'Connection', href: '/connection' },
     { label: 'Products', href: '/products' },
+    { label: 'Docs', href: docsIndex() },
 ];
 
 const accountLinks: NavItem[] = [
@@ -115,3 +117,6 @@ export function SiteNavbar() {
         </header>
     );
 }
+
+
+
