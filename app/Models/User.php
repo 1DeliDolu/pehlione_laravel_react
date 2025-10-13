@@ -51,4 +51,9 @@ class User extends Authenticatable
             'role' => Role::class,
         ];
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

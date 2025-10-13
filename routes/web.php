@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DocumentationController;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +15,7 @@ Route::get('/about', fn () => Inertia::render('about'))->name('about');
 Route::get('/connection', fn () => Inertia::render('connection'))->name('connection');
 Route::get('/products', function () {
     $categories = Category::query()
+        ->with(['products' => fn ($query) => $query->where('is_active', true)->orderBy('name')])
         ->orderBy('name')
         ->get()
         ->map(fn ($category) => [
@@ -20,12 +23,70 @@ Route::get('/products', function () {
             'name' => $category->name,
             'slug' => $category->slug,
             'description' => $category->description,
+            'products' => $category->products->map(fn ($product) => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'slug' => $product->slug,
+                'sku' => $product->sku,
+                'summary' => $product->summary,
+                'description' => $product->description,
+                'size_profile' => $product->size_profile,
+                'available_sizes' => $product->available_sizes,
+                'material_profile' => $product->material_profile,
+                'attribute_tags' => $product->attribute_tags,
+                'sustainability_notes' => $product->sustainability_notes,
+                'care_instructions' => $product->care_instructions,
+                'images' => $product->images,
+                'price' => (float) $product->price,
+                'currency' => $product->currency,
+                'stock_status' => $product->stock_status,
+                'stock_quantity' => $product->stock_quantity,
+                'lead_time_days' => $product->lead_time_days,
+                'energy_label' => $product->energy_label,
+                'metadata' => $product->metadata,
+            ])->values(),
         ]);
 
     return Inertia::render('products', [
         'categories' => $categories,
     ]);
 })->name('products');
+
+Route::get('/products/{product:slug}', function (Product $product) {
+    $product->load('category');
+
+    $payload = [
+        'id' => $product->id,
+        'name' => $product->name,
+        'slug' => $product->slug,
+        'sku' => $product->sku,
+        'summary' => $product->summary,
+        'description' => $product->description,
+        'size_profile' => $product->size_profile,
+        'available_sizes' => $product->available_sizes,
+        'material_profile' => $product->material_profile,
+        'attribute_tags' => $product->attribute_tags,
+        'sustainability_notes' => $product->sustainability_notes,
+        'care_instructions' => $product->care_instructions,
+        'price' => (float) $product->price,
+        'currency' => $product->currency,
+        'stock_status' => $product->stock_status,
+        'stock_quantity' => $product->stock_quantity,
+        'lead_time_days' => $product->lead_time_days,
+        'energy_label' => $product->energy_label,
+        'images' => $product->images ?? [],
+        'metadata' => $product->metadata ?? [],
+        'category' => [
+            'id' => $product->category?->id,
+            'name' => $product->category?->name,
+            'slug' => $product->category?->slug,
+        ],
+    ];
+
+    return Inertia::render('products/show', [
+        'product' => $payload,
+    ]);
+})->name('products.show');
 
 Route::middleware(['auth', 'verified'])->prefix('docs')->group(function () {
     Route::get('/', [DocumentationController::class, 'index'])->name('docs.index');
@@ -37,6 +98,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('cart/items', [CartController::class, 'store'])->name('cart.items.store');
+    Route::patch('cart/items/{item}', [CartController::class, 'update'])->name('cart.items.update');
+    Route::delete('cart/items/{item}', [CartController::class, 'destroy'])->name('cart.items.destroy');
 });
 
 require __DIR__.'/settings.php';

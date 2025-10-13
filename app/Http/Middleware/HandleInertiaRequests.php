@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -38,6 +39,23 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        $user = $request->user();
+
+        $cartSummary = [
+            'items' => 0,
+        ];
+
+        if ($user && \Schema::hasTable('carts')) {
+            $cart = $user->carts()
+                ->where('status', 'active')
+                ->withCount('items')
+                ->first();
+
+            if ($cart) {
+                $cartSummary['items'] = $cart->items_count;
+            }
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -45,6 +63,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'cartSummary' => $cartSummary,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

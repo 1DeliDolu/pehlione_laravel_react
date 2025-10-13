@@ -1,8 +1,9 @@
 import { index as docsIndex } from '@/routes/docs';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, ShoppingCart, X } from 'lucide-react';
 import { dashboard, login, register } from '@/routes';
+import cartRoutes from '@/routes/cart';
 import { cn } from '@/lib/utils';
 import type { SharedData } from '@/types';
 
@@ -13,6 +14,9 @@ interface NavItem {
     href: RouteLike;
     onlyAuth?: boolean;
     onlyGuest?: boolean;
+    badge?: string | number;
+    icon?: ReactNode;
+    hideLabelOnDesktop?: boolean;
 }
 
 const primaryLinks: NavItem[] = [
@@ -36,6 +40,10 @@ export function SiteNavbar() {
     const page = usePage<SharedData>();
     const user = page.props.auth.user as SharedData['auth']['user'] | null;
     const isAuthenticated = Boolean(user);
+    const rawCart = page.props.cartSummary?.items ?? 0;
+    const parsedCart = typeof rawCart === 'number' ? rawCart : parseInt(String(rawCart), 10);
+    const cartCount = Number.isFinite(parsedCart) && parsedCart > 0 ? parsedCart : 0;
+    const cartBadge = cartCount > 9 ? '9+' : String(cartCount);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const visibleAccountLinks = accountLinks.filter((item) => {
@@ -48,27 +56,66 @@ export function SiteNavbar() {
         return true;
     });
 
+    if (isAuthenticated) {
+        visibleAccountLinks.push({
+            label: 'Cart',
+            href: cartRoutes.index(),
+            onlyAuth: true,
+            badge: cartBadge,
+            icon: <ShoppingCart className="h-4 w-4" />, 
+            hideLabelOnDesktop: true,
+        });
+    }
+
     const combinedLinks: NavItem[] = [...primaryLinks, ...visibleAccountLinks];
 
-    const renderLink = (item: NavItem, index: number) => {
+    const renderLink = (item: NavItem, key: string, showLabel = true) => {
         const href = resolveHref(item.href);
         const isActive =
             href === '/' ? page.url === '/' : page.url.startsWith(href);
 
+        const isIconOnly = Boolean(item.icon) && !showLabel;
+
+        const linkClasses = isIconOnly
+            ? cn(
+                  'relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-300 text-neutral-700 transition hover:border-amber-500 hover:text-amber-600 dark:border-neutral-700 dark:text-neutral-200',
+                  isActive && 'border-amber-500 text-amber-600 dark:border-amber-400',
+              )
+            : cn(
+                  'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+                  isActive
+                      ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-100 dark:text-neutral-900'
+                      : 'text-neutral-700 hover:bg-neutral-200/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800/60 dark:hover:text-neutral-50',
+              );
+
+        const badgeClasses = isIconOnly
+            ? 'absolute -top-1 -right-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-600 px-1 text-[0.65rem] font-semibold leading-none text-white dark:bg-amber-500'
+            : 'inline-flex min-w-5 items-center justify-center rounded-full bg-amber-600 px-1.5 text-[0.65rem] font-semibold leading-none text-white dark:bg-amber-500';
+
         return (
             <Link
-                key={`${item.label}-${index}`}
+                key={key}
                 href={href}
                 prefetch
-                className={cn(
-                    'rounded-full px-4 py-2 text-sm font-medium transition-colors',
-                    isActive
-                        ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-100 dark:text-neutral-900'
-                        : 'text-neutral-700 hover:bg-neutral-200/70 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800/60 dark:hover:text-neutral-50',
-                )}
+                className={linkClasses}
                 onClick={() => setMobileOpen(false)}
             >
-                {item.label}
+                {isIconOnly ? (
+                    <>
+                        {item.icon}
+                        {item.badge !== undefined && (
+                            <span className={badgeClasses}>{item.badge}</span>
+                        )}
+                    </>
+                ) : (
+                    <span className="inline-flex items-center gap-2">
+                        {item.icon}
+                        {showLabel && item.label && <span>{item.label}</span>}
+                        {item.badge !== undefined && (
+                            <span className={badgeClasses}>{item.badge}</span>
+                        )}
+                    </span>
+                )}
             </Link>
         );
     };
@@ -97,9 +144,17 @@ export function SiteNavbar() {
                 </button>
 
                 <nav className="ml-auto hidden items-center gap-3 md:flex">
-                    {primaryLinks.map(renderLink)}
+                    {primaryLinks.map((item, index) =>
+                        renderLink(item, `primary-${index}`)
+                    )}
                     <div className="ml-2 flex items-center gap-2">
-                        {visibleAccountLinks.map(renderLink)}
+                        {visibleAccountLinks.map((item, index) =>
+                            renderLink(
+                                item,
+                                `account-${index}`,
+                                !item.hideLabelOnDesktop,
+                            )
+                        )}
                     </div>
                 </nav>
             </div>
@@ -110,7 +165,9 @@ export function SiteNavbar() {
                     className="border-t border-neutral-200/70 bg-white px-4 pb-4 pt-3 dark:border-neutral-800 dark:bg-neutral-950 md:hidden"
                 >
                     <div className="flex flex-col gap-2">
-                        {combinedLinks.map(renderLink)}
+                        {combinedLinks.map((item, index) =>
+                            renderLink(item, `mobile-${index}`, true)
+                        )}
                     </div>
                 </nav>
             )}

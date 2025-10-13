@@ -26,6 +26,9 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    cartSummary: {
+        items: number;
+    };
     sidebarOpen: boolean;
     [key: string]: unknown;
 }

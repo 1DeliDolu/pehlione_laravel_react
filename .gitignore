@@ -4,6 +4,12 @@
 /public/build
 /public/hot
 /public/storage
+/public/products/*
+!/public/products/placeholders/
+!/public/products/placeholders/*
+!/public/products/refrigerator.png
+!/public/products/tv.png
+!/public/products/tv_on.png
 /resources/js/actions
 /resources/js/routes
 /resources/js/wayfinder
