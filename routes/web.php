@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\OrderPreparationController;
 use App\Http\Controllers\OrderShipmentController;
 use App\Http\Controllers\MailLogController;
 use App\Models\Category;
@@ -98,9 +100,7 @@ Route::middleware(['auth', 'verified'])->prefix('docs')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('cart/items', [CartController::class, 'store'])->name('cart.items.store');
@@ -112,6 +112,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('checkout/confirmation/{order}', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 
+    Route::post('orders/{order}/prepare', OrderPreparationController::class)->name('orders.prepare');
     Route::post('orders/{order}/ship', OrderShipmentController::class)->name('orders.ship');
 
     Route::get('dashboard/mail', [MailLogController::class, 'index'])->name('mail.index');

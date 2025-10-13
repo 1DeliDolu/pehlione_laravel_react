@@ -41,7 +41,9 @@ class Order extends Model
         'notes',
         'placed_at',
         'paid_at',
+        'prepared_at',
         'shipped_at',
+        'delivery_estimate_at',
         'tracking_number',
     ];
 
@@ -55,7 +57,9 @@ class Order extends Model
         'billing_address' => 'array',
         'placed_at' => 'datetime',
         'paid_at' => 'datetime',
+        'prepared_at' => 'datetime',
         'shipped_at' => 'datetime',
+        'delivery_estimate_at' => 'datetime',
     ];
 
     public function user(): BelongsTo
@@ -101,4 +105,3 @@ class Order extends Model
         return $shippingCountry !== null && strtoupper($shippingCountry) === strtoupper($domesticCountry);
     }
 }
-
