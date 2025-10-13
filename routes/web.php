@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\OrderShipmentController;
+use App\Http\Controllers\MailLogController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -103,6 +106,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('cart/items', [CartController::class, 'store'])->name('cart.items.store');
     Route::patch('cart/items/{item}', [CartController::class, 'update'])->name('cart.items.update');
     Route::delete('cart/items/{item}', [CartController::class, 'destroy'])->name('cart.items.destroy');
+
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('checkout/preview', [CheckoutController::class, 'preview'])->name('checkout.preview');
+    Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('checkout/confirmation/{order}', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+
+    Route::post('orders/{order}/ship', OrderShipmentController::class)->name('orders.ship');
+
+    Route::get('dashboard/mail', [MailLogController::class, 'index'])->name('mail.index');
+    Route::post('dashboard/mail/{mailLog}/read', [MailLogController::class, 'markRead'])->name('mail.read');
+    Route::delete('dashboard/mail/{mailLog}', [MailLogController::class, 'destroy'])->name('mail.destroy');
 });
 
 require __DIR__.'/settings.php';

@@ -22,12 +22,30 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface PaginatedResponse<T> {
+    data: T[];
+    total: number;
+    per_page: number;
+    current_page: number;
+    last_page: number;
+    from?: number | null;
+    to?: number | null;
+    prev_page_url?: string | null;
+    next_page_url?: string | null;
+}
+
 export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
     cartSummary: {
         items: number;
+    };
+    warehouseAlerts: {
+        pending: number;
+    };
+    mailAlerts: {
+        unread: number;
     };
     sidebarOpen: boolean;
     [key: string]: unknown;

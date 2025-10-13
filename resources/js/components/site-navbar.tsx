@@ -1,8 +1,7 @@
-import { index as docsIndex } from '@/routes/docs';
 import { useState, type ReactNode } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, ShoppingCart, X } from 'lucide-react';
-import { dashboard, login, register } from '@/routes';
+import { Mail, Menu, ShoppingCart, X } from 'lucide-react';
+import { login, register } from '@/routes';
 import cartRoutes from '@/routes/cart';
 import { cn } from '@/lib/utils';
 import type { SharedData } from '@/types';
@@ -24,13 +23,12 @@ const primaryLinks: NavItem[] = [
     { label: 'About', href: '/about' },
     { label: 'Connection', href: '/connection' },
     { label: 'Products', href: '/products' },
-    { label: 'Docs', href: docsIndex() },
 ];
 
 const accountLinks: NavItem[] = [
     { label: 'Login', href: login(), onlyGuest: true },
     { label: 'Register', href: register(), onlyGuest: true },
-    { label: 'Dashboard', href: dashboard(), onlyAuth: true },
+    { label: 'Dashboard', href: '/dashboard', onlyAuth: true },
 ];
 
 const resolveHref = (target: RouteLike) =>
@@ -44,6 +42,8 @@ export function SiteNavbar() {
     const parsedCart = typeof rawCart === 'number' ? rawCart : parseInt(String(rawCart), 10);
     const cartCount = Number.isFinite(parsedCart) && parsedCart > 0 ? parsedCart : 0;
     const cartBadge = cartCount > 9 ? '9+' : String(cartCount);
+    const mailAlertsCount = Number(page.props.mailAlerts?.unread ?? 0);
+    const mailBadge = mailAlertsCount > 9 ? '9+' : String(mailAlertsCount);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const visibleAccountLinks = accountLinks.filter((item) => {
@@ -57,6 +57,15 @@ export function SiteNavbar() {
     });
 
     if (isAuthenticated) {
+        visibleAccountLinks.push({
+            label: 'Mail',
+            href: '/dashboard/mail',
+            onlyAuth: true,
+            badge: mailAlertsCount > 0 ? mailBadge : undefined,
+            icon: <Mail className="h-4 w-4" />,
+            hideLabelOnDesktop: true,
+        });
+
         visibleAccountLinks.push({
             label: 'Cart',
             href: cartRoutes.index(),
@@ -174,6 +183,3 @@ export function SiteNavbar() {
         </header>
     );
 }
-
-
-

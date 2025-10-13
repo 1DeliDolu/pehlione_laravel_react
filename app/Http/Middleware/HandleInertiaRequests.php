@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\WarehouseNotification;
+use App\Models\MailLog;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -45,6 +47,14 @@ class HandleInertiaRequests extends Middleware
             'items' => 0,
         ];
 
+        $warehouseAlerts = [
+            'pending' => 0,
+        ];
+
+        $mailAlerts = [
+            'unread' => 0,
+        ];
+
         if ($user && \Schema::hasTable('carts')) {
             $cart = $user->carts()
                 ->where('status', 'active')
@@ -56,6 +66,14 @@ class HandleInertiaRequests extends Middleware
             }
         }
 
+        if (Schema::hasTable('warehouse_notifications')) {
+            $warehouseAlerts['pending'] = WarehouseNotification::where('status', 'pending')->count();
+        }
+
+        if (Schema::hasTable('mail_logs')) {
+            $mailAlerts['unread'] = MailLog::whereNull('read_at')->whereNull('deleted_at')->count();
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -64,6 +82,8 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'cartSummary' => $cartSummary,
+            'warehouseAlerts' => $warehouseAlerts,
+            'mailAlerts' => $mailAlerts,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

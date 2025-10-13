@@ -123,13 +123,12 @@ export default function CartIndex({ cart }: CartPageProps) {
                                     <dd>{formatCurrency(derivedSubtotal, cart.currency)}</dd>
                                 </div>
                             </dl>
-                            <button
-                                type="button"
-                                className="w-full rounded-full bg-amber-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-amber-500 dark:hover:bg-amber-400"
-                                disabled
+                            <Link
+                                href="/checkout"
+                                className="flex w-full justify-center rounded-full bg-amber-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-amber-500 dark:hover:bg-amber-400"
                             >
-                                Checkout (coming soon)
-                            </button>
+                                Proceed to checkout
+                            </Link>
                             <p className="text-xs text-neutral-500 dark:text-neutral-400">
                                 Checkout is under construction. For now use this summary to coordinate fulfilment with the team.
                             </p>

@@ -32,7 +32,7 @@ import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Mail, Menu, Search } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -55,6 +55,12 @@ const rightNavItems: NavItem[] = [
         href: 'https://laravel.com/docs/starter-kits#react',
         icon: BookOpen,
     },
+    /* mail message gelen goden mailler */
+    {
+        title: 'Mail',
+        href: 'https://laravel.com/mail',
+        icon: Mail,
+    },
 ];
 
 const activeItemStyles =
@@ -66,8 +72,12 @@ interface AppHeaderProps {
 
 export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
-    const { auth } = page.props;
+    const { auth, warehouseAlerts, mailAlerts } = page.props;
     const getInitials = useInitials();
+    const pendingWarehouse = Number(warehouseAlerts?.pending ?? 0);
+    const unreadMail = Number(mailAlerts?.unread ?? 0);
+    const totalAlerts = pendingWarehouse + unreadMail;
+    const alertBadge = totalAlerts > 9 ? '9+' : String(totalAlerts);
     return (
         <>
             <div className="border-b border-sidebar-border/80">
@@ -187,6 +197,32 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
 
                     <div className="ml-auto flex items-center space-x-2">
                         <div className="relative flex items-center space-x-1">
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Link
+                                            href="/dashboard/mail"
+                                            className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 text-neutral-700 transition hover:border-amber-500 hover:text-amber-600 dark:border-neutral-700 dark:text-neutral-200"
+                                            prefetch
+                                            aria-label="Mail notifications"
+                                        >
+                                            <Mail className="h-5 w-5" />
+                                            {totalAlerts > 0 && (
+                                                <span className="absolute -top-1 -right-1 inline-flex min-h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[0.65rem] font-semibold leading-none text-white">
+                                                    {alertBadge}
+                                                </span>
+                                            )}
+                                        </Link>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="bottom">
+                                        <p>
+                                            {totalAlerts > 0
+                                                ? `${totalAlerts} mail notification${totalAlerts === 1 ? '' : 's'} unseen`
+                                                : 'No unread mail notifications'}
+                                        </p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -266,7 +302,3 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
         </>
     );
 }
-
-
-
-
