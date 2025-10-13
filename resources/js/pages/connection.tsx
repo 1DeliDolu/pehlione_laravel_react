@@ -1,13 +1,13 @@
 import { Head } from '@inertiajs/react';
 import SiteLayout from '@/layouts/site-layout';
 
-const contactChannels = [
-    { label: 'Service', email: 'service@pehlione.com', description: 'Customer support and order inquiries.' },
-    { label: 'Kunden', email: 'kunden@pehlione.com', description: 'German-speaking customer care.' },
-    { label: 'Marketing', email: 'marketing@pehlione.com', description: 'Campaign requests and collaborations.' },
-    { label: 'Lager', email: 'lager@pehlione.com', description: 'Warehouse coordination and stock alerts.' },
-    { label: 'Vertrieb', email: 'vertrieb@pehlione.com', description: 'Wholesale and partner opportunities.' },
-    { label: 'Admin', email: 'admin@pehlione.com', description: 'Escalations and platform administration.' },
+const contactChannels: { label: string; email: string; phone: string; description: string }[] = [
+    { label: 'Service', email: 'service@pehlione.com', phone: '+49 30 1234 5670', description: 'Customer support and order inquiries.' },
+    { label: 'Kunden', email: 'kunden@pehlione.com', phone: '+49 30 1234 5671', description: 'German-speaking customer care.' },
+    { label: 'Marketing', email: 'marketing@pehlione.com', phone: '+49 30 1234 5672', description: 'Campaign requests and collaborations.' },
+    { label: 'Lager', email: 'lager@pehlione.com', phone: '+49 30 1234 5673', description: 'Warehouse coordination and stock alerts.' },
+    { label: 'Vertrieb', email: 'vertrieb@pehlione.com', phone: '+49 30 1234 5674', description: 'Wholesale and partner opportunities.' },
+    { label: 'Admin', email: 'admin@pehlione.com', phone: '+49 30 1234 5679', description: 'Escalations and platform administration.' },
 ];
 
 export default function Connection() {
@@ -32,6 +32,9 @@ export default function Connection() {
                             </p>
                             <p className="mt-1 text-lg font-medium text-neutral-900 dark:text-neutral-100">
                                 {channel.email}
+                            </p>
+                            <p className="mt-1 text-lg font-medium text-neutral-900 dark:text-neutral-100">
+                                {channel.phone}
                             </p>
                             <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
                                 {channel.description}

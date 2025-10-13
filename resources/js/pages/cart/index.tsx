@@ -1,5 +1,5 @@
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect, type ChangeEvent } from 'react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import SiteLayout from '@/layouts/site-layout';
 import { show as productShow } from '@/routes/products';
 import cartRoutes from '@/routes/cart';
@@ -31,7 +31,50 @@ interface CartPageProps {
 }
 
 export default function CartIndex({ cart }: CartPageProps) {
-    const hasItems = cart.items.length > 0;
+    const [quantities, setQuantities] = useState<Record<number, number>>(() => {
+        const initial: Record<number, number> = {};
+        cart.items.forEach((item) => {
+            initial[item.id] = item.quantity;
+        });
+        return initial;
+    });
+
+    useEffect(() => {
+        setQuantities(() => {
+            const next: Record<number, number> = {};
+            cart.items.forEach((item) => {
+                next[item.id] = item.quantity;
+            });
+            return next;
+        });
+    }, [cart.items]);
+
+    const visibleItems = cart.items.filter((item) => {
+        const quantity = quantities[item.id] ?? item.quantity;
+        return quantity > 0;
+    });
+    const hasItems = visibleItems.length > 0;
+
+    const derivedSubtotal = cart.items.reduce((total, item) => {
+        const quantity = quantities[item.id] ?? item.quantity;
+        if (quantity <= 0) {
+            return total;
+        }
+        return total + item.unit_price * quantity;
+    }, 0);
+
+    const handleQuantityPreview = (itemId: number, quantity: number) => {
+        setQuantities((prev) => {
+            if (prev[itemId] === quantity) {
+                return prev;
+            }
+
+            return {
+                ...prev,
+                [itemId]: quantity,
+            };
+        });
+    };
 
     return (
         <SiteLayout>
@@ -53,8 +96,14 @@ export default function CartIndex({ cart }: CartPageProps) {
                 {hasItems && (
                     <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
                         <div className="space-y-4">
-                            {cart.items.map((item) => (
-                                <CartItemCard key={item.id} item={item} />
+                            {visibleItems.map((item) => (
+                                <CartItemCard
+                                    key={item.id}
+                                    item={item}
+                                    quantity={quantities[item.id] ?? item.quantity}
+                                    currency={cart.currency}
+                                    onQuantityPreview={(value) => handleQuantityPreview(item.id, value)}
+                                />
                             ))}
                         </div>
 
@@ -63,7 +112,7 @@ export default function CartIndex({ cart }: CartPageProps) {
                             <dl className="space-y-3 text-sm text-neutral-600 dark:text-neutral-300">
                                 <div className="flex justify-between">
                                     <dt>Subtotal</dt>
-                                    <dd>{formatCurrency(cart.subtotal, cart.currency)}</dd>
+                                    <dd>{formatCurrency(derivedSubtotal, cart.currency)}</dd>
                                 </div>
                                 <div className="flex justify-between">
                                     <dt>Shipping</dt>
@@ -71,7 +120,7 @@ export default function CartIndex({ cart }: CartPageProps) {
                                 </div>
                                 <div className="flex justify-between text-base font-semibold text-neutral-900 dark:text-neutral-100">
                                     <dt>Total</dt>
-                                    <dd>{formatCurrency(cart.subtotal, cart.currency)}</dd>
+                                    <dd>{formatCurrency(derivedSubtotal, cart.currency)}</dd>
                                 </div>
                             </dl>
                             <button
@@ -92,43 +141,73 @@ export default function CartIndex({ cart }: CartPageProps) {
     );
 }
 
-function CartItemCard({ item }: { item: CartProductSummary }) {
-    const quantityForm = useForm({ quantity: item.quantity });
+function CartItemCard({
+    item,
+    quantity,
+    currency,
+    onQuantityPreview,
+}: {
+    item: CartProductSummary;
+    quantity: number;
+    currency: string;
+    onQuantityPreview: (quantity: number) => void;
+}) {
     const removeForm = useForm({});
+    const [isUpdating, setIsUpdating] = useState(false);
 
     const productUrl = item.product.slug ? productShow({ product: item.product.slug }).url : '#';
 
-    useEffect(() => {
-        quantityForm.setData('quantity', item.quantity);
-    }, [item.quantity]);
-
     const applyQuantity = (next: number) => {
-        const clamped = Math.max(1, Math.min(50, next));
+        const clamped = Math.max(0, Math.min(50, next));
 
-        if (clamped === item.quantity || quantityForm.processing) {
-            quantityForm.setData('quantity', clamped);
+        if (isUpdating || removeForm.processing) {
             return;
         }
 
-        quantityForm.setData('quantity', clamped);
-        quantityForm.patch(cartRoutes.items.update({ item: item.id }).url, {
-            preserveScroll: true,
-        });
+        if (clamped === quantity) {
+            return;
+        }
+
+        onQuantityPreview(clamped);
+
+        if (clamped === 0) {
+            removeForm.delete(cartRoutes.items.destroy({ item: item.id }).url, {
+                preserveScroll: true,
+                onError: () => {
+                    onQuantityPreview(item.quantity);
+                },
+            });
+            return;
+        }
+
+        setIsUpdating(true);
+        router.patch(
+            cartRoutes.items.update({ item: item.id }).url,
+            { quantity: clamped },
+            {
+                preserveScroll: true,
+                onError: () => {
+                    onQuantityPreview(item.quantity);
+                },
+                onFinish: () => {
+                    setIsUpdating(false);
+                },
+            }
+        );
     };
 
     const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = Number(event.target.value);
 
         if (Number.isNaN(value)) {
-            quantityForm.setData('quantity', item.quantity);
+            onQuantityPreview(item.quantity);
             return;
         }
 
         applyQuantity(value);
     };
 
-    const currentQuantity = quantityForm.data.quantity ?? item.quantity;
-    const derivedTotal = item.unit_price * currentQuantity;
+    const derivedTotal = item.unit_price * quantity;
 
     return (
         <div className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-amber-400 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
@@ -164,9 +243,9 @@ function CartItemCard({ item }: { item: CartProductSummary }) {
                         )}
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-600 dark:text-neutral-300">
-                        <span>Unit: {formatCurrency(item.unit_price)}</span>
+                        <span>Unit: {formatCurrency(item.unit_price, currency)}</span>
                         <span className="font-semibold text-neutral-900 dark:text-neutral-100">
-                            {formatCurrency(derivedTotal)}
+                            Total: {formatCurrency(derivedTotal, currency)}
                         </span>
                     </div>
                 </div>
@@ -179,24 +258,28 @@ function CartItemCard({ item }: { item: CartProductSummary }) {
                     </label>
                     <input
                         type="number"
-                        min={1}
+                        min={0}
                         max={50}
-                        value={currentQuantity}
+                        value={quantity}
                         onChange={handleQuantityChange}
                         className="h-10 w-20 rounded-full border border-neutral-300 px-3 text-sm focus:border-amber-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900"
-                        disabled={quantityForm.processing}
+                        disabled={isUpdating || removeForm.processing}
                     />
                 </div>
 
                 <button
                     type="button"
-                    onClick={() =>
+                    onClick={() => {
+                        onQuantityPreview(0);
                         removeForm.delete(cartRoutes.items.destroy({ item: item.id }).url, {
                             preserveScroll: true,
-                        })
-                    }
+                            onError: () => {
+                                onQuantityPreview(item.quantity);
+                            },
+                        });
+                    }}
                     className="rounded-full border border-red-500 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-500 transition hover:bg-red-500 hover:text-white"
-                    disabled={removeForm.processing || quantityForm.processing}
+                    disabled={removeForm.processing || isUpdating}
                 >
                     Remove
                 </button>
