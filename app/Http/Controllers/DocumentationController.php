@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
+use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -27,13 +31,16 @@ class DocumentationController extends Controller
 
     private function render(?string $sectionSlug = null, ?string $documentSlug = null): Response
     {
-        $sections = $this->scanSections();
+        $allSections = $this->scanSections();
+        $sections = $this->filterSectionsForUser($allSections);
+        $restrictedAccess = $allSections->isNotEmpty() && $sections->isEmpty();
 
         if ($sections->isEmpty()) {
             return Inertia::render('docs/index', [
                 'sections' => [],
                 'current' => ['section' => null, 'document' => null],
                 'document' => null,
+                'access' => ['restricted' => $restrictedAccess],
             ]);
         }
 
@@ -41,7 +48,7 @@ class DocumentationController extends Controller
         $activeSection = $sectionSlug ? $sectionIndex->get($sectionSlug) : $sections->first();
 
         if (! $activeSection) {
-            abort(404);
+            abort($sectionSlug ? 403 : 404);
         }
 
         $documentPayload = null;
@@ -79,7 +86,23 @@ class DocumentationController extends Controller
                 'document' => $documentPayload['slug'] ?? null,
             ],
             'document' => $documentPayload,
+            'access' => ['restricted' => $restrictedAccess],
         ]);
+    }
+
+    private function filterSectionsForUser(Collection $sections): Collection
+    {
+        $user = Auth::user();
+
+        if (! $user instanceof User) {
+            return $sections
+                ->filter(fn ($section) => empty($this->restrictedRolesFor($section['slug'])))
+                ->values();
+        }
+
+        return $sections
+            ->filter(fn ($section) => $this->userCanAccessSection($user, $section['slug']))
+            ->values();
     }
 
     private function scanSections()
@@ -151,5 +174,58 @@ class DocumentationController extends Controller
             ->replaceMatches('/\s+/', ' ')
             ->trim()
             ->ucfirst();
+    }
+
+    private function userCanAccessSection(User $user, string $sectionSlug): bool
+    {
+        $restricted = $this->restrictedRolesFor($sectionSlug);
+
+        if (empty($restricted)) {
+            return true;
+        }
+
+        $role = $user->role;
+
+        if (! $role instanceof Role) {
+            return false;
+        }
+
+        if (in_array($role, $this->supervisorRoles(), true)) {
+            return true;
+        }
+
+        return in_array($role, $restricted, true);
+    }
+
+    /**
+     * @return array<int, Role>
+     */
+    private function restrictedRolesFor(string $sectionSlug): array
+    {
+        $configured = config('docs.restricted_sections', []);
+
+        $roles = $configured[$sectionSlug] ?? [];
+
+        return array_values(array_filter(array_map(
+            static fn (string $value) => Role::tryFrom($value),
+            $roles
+        )));
+    }
+
+    /**
+     * @return array<int, Role>
+     */
+    private function supervisorRoles(): array
+    {
+        $roles = config('docs.supervisor_roles', []);
+
+        if (empty($roles)) {
+            return Role::supervisors();
+        }
+
+        return array_values(array_filter(array_map(
+            static fn (string $value) => Role::tryFrom($value),
+            $roles
+        )));
     }
 }

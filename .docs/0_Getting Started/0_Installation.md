@@ -62,13 +62,13 @@ Tam özellikli, grafik arayüzlü bir PHP yükleme ve yönetim deneyimi için La
 PHP, Composer ve Laravel installer’ı yükledikten sonra yeni bir Laravel uygulaması oluşturmaya hazırsınız. Laravel installer, tercih ettiğiniz test framework’ünü, veritabanını ve starter kit’i seçmenizi isteyecektir:
 
 ```bash
-laravel new example-app
+laravel new pehlione --react --pest --mysql
 ```
 
 Uygulama oluşturulduktan sonra, Laravel’in yerel geliştirme sunucusunu, kuyruk işçisini ve Vite geliştirme sunucusunu dev Composer script’iyle başlatabilirsiniz:
 
 ```bash
-cd example-app
+cd pehlione # Enter your new project directory
 npm install && npm run build
 composer run dev
 ```
@@ -122,20 +122,28 @@ macOS veya Windows üzerinde geliştiriyor ve MySQL, PostgreSQL veya Redis’i y
 ---
 
 ## Dizin Yapılandırması
-
+<br>
 Laravel her zaman web sunucunuz için yapılandırılmış “web dizininin” kökünden servis edilmelidir. Laravel uygulamasını “web dizininin” bir alt dizininden çalıştırmaya çalışmamalısınız. Bunu yapmak, uygulamanızdaki hassas dosyaların açığa çıkmasına neden olabilir.
+
+<br>
 
 ---
 
-## Herd Kullanarak Kurulum
+<br>
 
+## Herd Kullanarak Kurulum
+<br>
 **Laravel Herd**, macOS ve Windows için son derece hızlı, yerel bir Laravel ve PHP geliştirme ortamıdır. Herd, PHP ve Nginx dahil olmak üzere Laravel geliştirmeye başlamak için ihtiyaç duyduğunuz her şeyi içerir.
 
 Herd’ü yükledikten sonra Laravel ile geliştirmeye başlamaya hazırsınız. Herd, şu komut satırı araçlarını içerir: `php`, `composer`, `laravel`, `expose`, `node`, `npm` ve `nvm`.
 
 **Herd Pro**, Herd’e ek olarak yerel **MySQL**, **Postgres** ve **Redis** veritabanları oluşturma ve yönetme yeteneği, yerel e-posta görüntüleme ve log izleme gibi ek güçlü özellikler kazandırır.
 
+<br>
+
 ---
+
+<br>
 
 ### macOS Üzerinde Herd
 
@@ -147,8 +155,8 @@ Herd’ü yükledikten sonra yeni bir Laravel uygulaması oluşturmanın en hız
 
 ```bash
 cd ~/Herd
-laravel new my-app
-cd my-app
+laravel new pehlione
+cd pehlione
 herd open
 ```
 
@@ -170,8 +178,8 @@ Herd’ü yükledikten sonra yeni bir Laravel uygulaması oluşturmanın en hız
 
 ```powershell
 cd ~\Herd
-laravel new my-app
-cd my-app
+laravel new pehlione
+cd pehlione
 herd open
 ```
 
@@ -221,6 +229,8 @@ Boost hakkında daha fazla bilgi edinmek için **Laravel Boost deposuna GitHub�
 
 # Sonraki Adımlar
 
+<br>
+
 Artık Laravel uygulamanızı oluşturduğunuza göre, sırada ne öğrenmeniz gerektiğini merak ediyor olabilirsiniz. Öncelikle, Laravel’in nasıl çalıştığını anlamak için aşağıdaki dokümantasyonu okumanızı şiddetle tavsiye ederiz:
 
 * Request Lifecycle
@@ -232,7 +242,10 @@ Artık Laravel uygulamanızı oluşturduğunuza göre, sırada ne öğrenmeniz g
 
 Laravel’i nasıl kullanmak istediğiniz, yolculuğunuzun sonraki adımlarını da belirleyecektir. Laravel’i kullanmanın çeşitli yolları vardır ve aşağıda framework’ün iki temel kullanım durumunu inceleyeceğiz.
 
+<br>
 ---
+
+<br>
 
 ## Laravel: Full Stack Framework Olarak
 
@@ -246,7 +259,11 @@ Uygulamanızı oluşturmaya hızlı bir başlangıç yapmak istiyorsanız, resmi
 
 ---
 
+<br>
+
 ## Laravel: API Backend Olarak
+
+<br>
 
 Laravel ayrıca bir **API backend** olarak da hizmet edebilir; örneğin, bir JavaScript tek sayfa uygulaması veya mobil uygulama için. Örneğin, Laravel’i **Next.js** uygulamanız için bir API backend olarak kullanabilirsiniz. Bu bağlamda, Laravel’i uygulamanız için kimlik doğrulama ve veri depolama / alma işlemlerini sağlamak amacıyla kullanabilir, aynı zamanda **kuyruklar**, **e-postalar**, **bildirimler** gibi güçlü Laravel servislerinden de yararlanabilirsiniz.
 

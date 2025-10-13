@@ -12,7 +12,7 @@ Route::get('/about', fn () => Inertia::render('about'))->name('about');
 Route::get('/connection', fn () => Inertia::render('connection'))->name('connection');
 Route::get('/products', fn () => Inertia::render('products'))->name('products');
 
-Route::prefix('docs')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('docs')->group(function () {
     Route::get('/', [DocumentationController::class, 'index'])->name('docs.index');
     Route::get('{section}', [DocumentationController::class, 'section'])->name('docs.section');
     Route::get('{section}/{document}', [DocumentationController::class, 'show'])->name('docs.show');

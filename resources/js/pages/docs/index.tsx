@@ -32,13 +32,17 @@ interface DocsPageProps {
         document: Nullable<string>;
     };
     document?: Nullable<DocumentPayload>;
+    access?: {
+        restricted: boolean;
+    };
 }
 
-export default function DocsIndex({ sections, current, document }: DocsPageProps) {
+export default function DocsIndex({ sections, current, document, access }: DocsPageProps) {
     const hasSections = sections.length > 0;
     const activeSectionSlug = current.section ?? sections[0]?.slug ?? null;
     const activeSection = sections.find((section) => section.slug === activeSectionSlug);
     const activeFiles = activeSection?.files ?? [];
+    const restricted = access?.restricted ?? false;
 
     return (
         <SiteLayout>
@@ -66,7 +70,17 @@ export default function DocsIndex({ sections, current, document }: DocsPageProps
 
                 {!hasSections && (
                     <div className="rounded-2xl border border-dashed border-neutral-300 bg-white p-8 text-center text-sm text-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400">
-                        No documentation folders were detected. Add Markdown files under <code>.docs/</code> to populate this view.
+                        {restricted ? (
+                            <span>
+                                No documentation is available for your role yet. Contact an administrator if you need additional
+                                access.
+                            </span>
+                        ) : (
+                            <span>
+                                No documentation folders were detected. Add Markdown files under <code>.docs/</code> to populate this
+                                view.
+                            </span>
+                        )}
                     </div>
                 )}
 
