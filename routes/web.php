@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentationController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -10,7 +11,21 @@ Route::get('/', function () {
 
 Route::get('/about', fn () => Inertia::render('about'))->name('about');
 Route::get('/connection', fn () => Inertia::render('connection'))->name('connection');
-Route::get('/products', fn () => Inertia::render('products'))->name('products');
+Route::get('/products', function () {
+    $categories = Category::query()
+        ->orderBy('name')
+        ->get()
+        ->map(fn ($category) => [
+            'id' => $category->id,
+            'name' => $category->name,
+            'slug' => $category->slug,
+            'description' => $category->description,
+        ]);
+
+    return Inertia::render('products', [
+        'categories' => $categories,
+    ]);
+})->name('products');
 
 Route::middleware(['auth', 'verified'])->prefix('docs')->group(function () {
     Route::get('/', [DocumentationController::class, 'index'])->name('docs.index');

@@ -63,7 +63,7 @@ export default function DocsIndex({ sections, current, document, access }: DocsP
                             </span>
                         )}
                     </div>
-                    <p className="max-w-2xl text-sm text-neutral-600 dark:text-neutral-300">
+                    <p className="max-w-2xl text-sm text-neutral-600 dark:text-neutral-300 text-justify">
                         Browse the living documentation stored under <code>.docs/</code>. Choose a section to reveal its Markdown notes, then open a note to render the formatted content inline.
                     </p>
                 </header>
@@ -105,7 +105,7 @@ export default function DocsIndex({ sections, current, document, access }: DocsP
                                             <h2 className="break-words text-lg font-semibold leading-tight">
                                                 {section.title}
                                             </h2>
-                                            <p className="break-words text-sm text-neutral-500 dark:text-neutral-400">
+                                            <p className="break-words text-sm text-neutral-500 dark:text-neutral-400 text-justify">
                                                 {section.summary ?? 'Select to view its notes.'}
                                             </p>
                                         </div>
@@ -157,7 +157,7 @@ export default function DocsIndex({ sections, current, document, access }: DocsP
                                                         {file.title}
                                                     </h3>
                                                     {file.summary && (
-                                                        <p className="break-words text-sm text-neutral-500 dark:text-neutral-400">
+                                                        <p className="break-words text-sm text-neutral-500 dark:text-neutral-400 text-justify">
                                                             {file.summary}
                                                         </p>
                                                     )}
@@ -184,7 +184,7 @@ export default function DocsIndex({ sections, current, document, access }: DocsP
                                         </p>
                                     </div>
                                     <div
-                                        className="docs-content max-w-full break-words text-sm leading-relaxed text-neutral-700 dark:text-neutral-200 [&_a]:text-amber-600 [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-neutral-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.85em] [&_h1]:mt-8 [&_h1]:text-3xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_li]:break-words [&_p]:break-words [&_pre]:my-6 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-neutral-200 [&_pre]:bg-neutral-100 [&_pre]:px-3 [&_pre]:py-3 [&_pre]:font-mono [&_pre]:text-xs md:[&_pre]:text-sm [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto dark:[&_a]:text-amber-300 dark:[&_code]:bg-neutral-800 dark:[&_pre]:border-neutral-700 dark:[&_pre]:bg-neutral-900"
+                                        className="docs-content max-w-full break-words text-sm leading-relaxed text-neutral-700 dark:text-neutral-200 text-justify [&_a]:text-amber-600 [&_a]:underline [&_a]:underline-offset-4 [&_code]:rounded [&_code]:bg-neutral-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[0.85em] [&_h1]:mt-8 [&_h1]:text-3xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_li]:break-words [&_p]:break-words [&_pre]:my-6 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-neutral-200 [&_pre]:bg-neutral-100 [&_pre]:px-3 [&_pre]:py-3 [&_pre]:font-mono [&_pre]:text-xs md:[&_pre]:text-sm [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto dark:[&_a]:text-amber-300 dark:[&_code]:bg-neutral-800 dark:[&_pre]:border-neutral-700 dark:[&_pre]:bg-neutral-900"
                                         dangerouslySetInnerHTML={{ __html: document.html }}
                                     />
                                 </article>

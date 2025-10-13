@@ -1,13 +1,69 @@
 import { Head, Link } from '@inertiajs/react';
 import SiteLayout from '@/layouts/site-layout';
 
-const sampleCategories = [
-    { name: 'New Arrivals', description: 'Fresh seasonal picks curated by our merchandising team.' },
-    { name: 'Tech & Accessories', description: 'Latest devices, wearables, and smart-living essentials.' },
-    { name: 'Home & Living', description: 'Organisers, decor, and everyday comforts for modern homes.' },
+interface CategorySummary {
+    id?: number;
+    name: string;
+    slug?: string;
+    description?: string | null;
+}
+
+interface ProductsPageProps {
+    categories?: CategorySummary[];
+}
+
+const fallbackCategories: CategorySummary[] = [
+    {
+        name: 'White Goods',
+        slug: 'white-goods',
+        description:
+            'Large household appliances like refrigerators, washers, and dryers designed for everyday reliability.',
+    },
+    {
+        name: 'Consumer Electronics',
+        slug: 'consumer-electronics',
+        description: 'Televisions, audio systems, personal devices, and accessories that keep customers connected.',
+    },
+    {
+        name: 'Garden Equipment',
+        slug: 'garden-equipment',
+        description: 'Power tools, watering systems, and maintenance essentials for year-round garden care.',
+    },
+    {
+        name: 'Outdoor Furniture',
+        slug: 'outdoor-furniture',
+        description: 'Weather-ready seating, dining sets, and shade solutions for patios, balconies, and terraces.',
+    },
+    {
+        name: 'Home Furniture',
+        slug: 'home-furniture',
+        description: 'Living room, bedroom, and storage pieces curated for comfort and contemporary style.',
+    },
+    {
+        name: 'Kitchen & Dining',
+        slug: 'kitchen-and-dining',
+        description: 'Cookware, tableware, and countertop helpers that streamline meal prep and hosting.',
+    },
+    {
+        name: 'Smart Home & IoT',
+        slug: 'smart-home-and-iot',
+        description: 'Connected devices, sensors, and hubs that automate lighting, security, and energy management.',
+    },
+    {
+        name: 'Home Office Essentials',
+        slug: 'home-office-essentials',
+        description: 'Ergonomic desks, seating, and productivity accessories for a focused workspace.',
+    },
+    {
+        name: 'Lighting & Fixtures',
+        slug: 'lighting-and-fixtures',
+        description: 'Indoor and outdoor lighting solutions, from energy-efficient bulbs to statement fixtures.',
+    },
 ];
 
-export default function Products() {
+export default function Products({ categories = [] }: ProductsPageProps) {
+    const items = categories.length > 0 ? categories : fallbackCategories;
+
     return (
         <SiteLayout>
             <Head title="Products" />
@@ -19,9 +75,9 @@ export default function Products() {
                     </p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {sampleCategories.map((category) => (
+                    {items.map((category) => (
                         <div
-                            key={category.name}
+                            key={category.slug ?? category.name}
                             className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-amber-500 hover:shadow-md dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-amber-400"
                         >
                             <div className="space-y-3">
@@ -33,7 +89,7 @@ export default function Products() {
                                 </p>
                             </div>
                             <Link
-                                href="#"
+                                href={category.slug ? `/products#${category.slug}` : '#'}
                                 className="mt-4 inline-flex items-center text-sm font-semibold text-amber-600 transition hover:text-amber-500 dark:text-amber-400 dark:hover:text-amber-300"
                             >
                                 View upcoming lineup ?

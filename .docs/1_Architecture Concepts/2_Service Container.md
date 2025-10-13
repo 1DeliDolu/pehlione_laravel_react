@@ -1,6 +1,6 @@
 
-Service Container  
-Giriş  
+# Service Container  
+## Giriş  
 Laravel service container, sınıf bağımlılıklarını yönetmek ve bağımlılık enjeksiyonu (dependency injection) gerçekleştirmek için güçlü bir araçtır. Bağımlılık enjeksiyonu, temel olarak şu anlama gelir: sınıf bağımlılıkları, sınıfa constructor veya bazı durumlarda “setter” metotları aracılığıyla “enjeksiyon” yapılır.  
 
 Basit bir örneğe bakalım:  
@@ -32,13 +32,13 @@ class PodcastController extends Controller
         ]);
     }
 }
-````
+```
 
 Bu örnekte, `PodcastController`, Apple Music gibi bir veri kaynağından podcast’leri almak zorundadır. Bu yüzden podcast’leri alabilen bir servisi enjeksiyon yoluyla sınıfa dahil ederiz. Servis enjeksiyonla sağlandığı için, uygulamamızı test ederken `AppleMusic` servisinin “mock” (sahte) bir versiyonunu kolayca oluşturabilir veya kullanabiliriz.
 
 Laravel service container’ı derinlemesine anlamak, güçlü ve büyük uygulamalar oluşturmak için olduğu kadar Laravel çekirdeğine katkıda bulunmak için de çok önemlidir.
 
-Zero Configuration Resolution
+## Zero Configuration Resolution
 Bir sınıfın bağımlılığı yoksa veya yalnızca başka somut (concrete) sınıflara bağlıysa (interface’lere değil), container o sınıfın nasıl çözümleneceğini bilmek zorunda değildir. Örneğin, aşağıdaki kodu `routes/web.php` dosyanıza koyabilirsiniz:
 
 ```php
@@ -58,7 +58,9 @@ Bu örnekte, uygulamanızın `/` rotasına istek gönderildiğinde, `Service` s�
 
 Neyse ki, Laravel uygulaması oluştururken yazacağınız birçok sınıf, container aracılığıyla otomatik olarak bağımlılıklarını alır — bunlara controller’lar, event listener’lar, middleware’ler ve daha fazlası dahildir. Ayrıca, queued job’ların `handle` metodu içinde de bağımlılıkları type-hint yoluyla belirtebilirsiniz. Otomatik ve sıfır yapılandırmalı bağımlılık enjeksiyonunun gücünü bir kez tattığınızda, onsuz geliştirme yapmak neredeyse imkânsız gelir.
 
-Container Ne Zaman Kullanılmalı
+<br/>
+
+### Container Ne Zaman Kullanılmalı
 Sıfır yapılandırmalı çözümleme sayesinde, genellikle rotalarda, controller’larda, event listener’larda ve başka yerlerde bağımlılıkları type-hint yaparak container ile manuel olarak etkileşime girmeden kullanırsınız. Örneğin, mevcut isteğe kolayca erişebilmek için rota tanımınızda `Illuminate\Http\Request` nesnesini type-hint olarak belirtebilirsiniz. Container ile doğrudan etkileşime girmesek bile, arka planda bu bağımlılıkların enjeksiyonunu container yönetir:
 
 ```php
@@ -77,8 +79,8 @@ Birincisi, bir interface uygulayan bir sınıf yazarsanız ve bu interface’i b
 
 
 ## Binding
-Binding Temelleri  
-Basit Binding’ler  
+### Binding Temelleri
+#### Basit Binding’ler
 Service container binding’lerinin neredeyse tamamı service provider’lar içinde kaydedilir, bu yüzden örneklerin çoğu container’ın bu bağlamda nasıl kullanıldığını gösterecektir.  
 
 Bir service provider içinde container’a her zaman `$this->app` özelliği aracılığıyla erişebilirsiniz. `bind` metodunu kullanarak bir binding kaydedebiliriz; bu metoda kaydetmek istediğimiz sınıf veya interface adını, ayrıca bu sınıfın bir örneğini döndüren bir closure’ı geçiririz:  
@@ -91,7 +93,7 @@ use Illuminate\Contracts\Foundation\Application;
 $this->app->bind(Transistor::class, function (Application $app) {
     return new Transistor($app->make(PodcastParser::class));
 });
-````
+```
 
 Dikkat ederseniz, çözücüye (resolver) container’ın kendisini argüman olarak alıyoruz. Böylece, oluşturduğumuz nesnenin alt bağımlılıklarını çözümlemek için container’ı kullanabiliriz.
 
@@ -125,6 +127,8 @@ App::bind(function (Application $app): Transistor {
 
 Bağımlılığı olmayan sınıfları container’a manuel olarak bind etmenize gerek yoktur. Container bu nesneleri reflection kullanarak otomatik olarak çözümleyebilir.
 
+<br />
+
 ### Bir Singleton Binding
 
 `singleton` metodu, bir sınıf veya interface’i container’a yalnızca bir kez çözümlenecek şekilde bağlar. Bir singleton binding çözümlendikten sonra, container’a yapılan sonraki tüm çağrılarda aynı nesne örneği döndürülür:
@@ -146,6 +150,7 @@ $this->app->singletonIf(Transistor::class, function (Application $app) {
     return new Transistor($app->make(PodcastParser::class));
 });
 ```
+<br>
 
 ### Singleton Attribute
 
@@ -164,6 +169,7 @@ class Transistor
     // ...
 }
 ```
+<br>
 
 ### Scoped Singleton Binding
 
@@ -186,6 +192,7 @@ $this->app->scopedIf(Transistor::class, function (Application $app) {
     return new Transistor($app->make(PodcastParser::class));
 });
 ```
+<br>
 
 ### Scoped Attribute
 
@@ -204,6 +211,7 @@ class Transistor
     // ...
 }
 ```
+<br>
 
 ### Instance Binding
 
@@ -217,6 +225,7 @@ $service = new Transistor(new PodcastParser);
  
 $this->app->instance(Transistor::class, $service);
 ```
+<br>
 
 ### Interface’leri Implementasyonlara Bağlama
 
@@ -238,6 +247,7 @@ public function __construct(
     protected EventPusher $pusher,
 ) {}
 ```
+<br>
 
 ### Bind Attribute
 
@@ -276,6 +286,7 @@ interface EventPusher
     // ...
 }
 ```
+<br>
 
 ### Contextual Binding
 
@@ -300,6 +311,7 @@ $this->app->when([VideoController::class, UploadController::class])
         return Storage::disk('s3');
     });
 ```
+<br>
 
 ### Contextual Attributes
 
@@ -378,6 +390,7 @@ Route::get('/user', function (#[CurrentUser] User $user) {
     return $user;
 })->middleware('auth');
 ```
+<br>
 
 ### Özel Attribute’lar Tanımlama
 
@@ -405,6 +418,7 @@ class Config implements ContextualAttribute
     }
 }
 ```
+<br>
 
 ### Primitif Değerleri Binding Etme
 
@@ -491,6 +505,8 @@ $this->app->when(Firewall::class)
     ]);
 ```
 
+<br>
+
 ### Variadic Tag Dependencies
 
 Bazen bir sınıf, belirli bir sınıfla type-hint edilmiş bir variadic bağımlılığa sahip olabilir (`Report ...$reports`). `needs` ve `giveTagged` metotlarını kullanarak, belirli bir bağımlılık için aynı etiketle container’a kaydedilen tüm binding’leri kolayca enjekte edebilirsiniz:
@@ -529,6 +545,8 @@ $this->app->bind(ReportAnalyzer::class, function (Application $app) {
 
 ---
 
+<br>
+
 ### Extending Bindings
 
 `extend` metodu, çözümlenen servisleri değiştirmeye (modify) olanak tanır. Örneğin, bir servis çözümlendiğinde, servisi dekore etmek veya yapılandırmak için ek kod çalıştırabilirsiniz.
@@ -541,6 +559,8 @@ $this->app->extend(Service::class, function (Service $service, Application $app)
 ```
 
 ---
+
+<br> 
 
 ### Resolving
 
@@ -594,6 +614,8 @@ public function __construct(
 
 ---
 
+<br>
+
 ### Automatic Injection
 
 Alternatif olarak ve önemli biçimde, container tarafından çözümlenen bir sınıfın constructor’ında (controller, event listener, middleware vb.) bağımlılıkları doğrudan type-hint olarak belirtebilirsiniz. Ayrıca, queued job’ların `handle` metodunda da bağımlılıkları type-hint edebilirsiniz.
@@ -626,8 +648,9 @@ class PodcastController extends Controller
     }
 }
 ```
-````markdown
-Method Invocation and Injection  
+<br>
+
+## Method Invocation and Injection  
 Bazen, bir nesne örneği üzerindeki bir metodu çağırmak isterken, container’ın bu metodun bağımlılıklarını otomatik olarak enjekte etmesini isteyebilirsiniz. Örneğin, aşağıdaki sınıfa bakalım:  
 
 ```php
@@ -673,6 +696,8 @@ $result = App::call(function (AppleMusic $apple) {
 
 ---
 
+<br>
+
 ### Container Events
 
 Service container, her nesne çözümlendiğinde bir event tetikler. Bu olayı `resolving` metodu ile dinleyebilirsiniz:
@@ -693,6 +718,8 @@ $this->app->resolving(function (mixed $object, Application $app) {
 Görüldüğü gibi, çözümlenen nesne callback’e geçirilir; böylece, nesne tüketicisine verilmeden önce üzerine ek özellikler atayabilirsiniz.
 
 ---
+
+<br>
 
 ### Rebinding
 
@@ -719,6 +746,8 @@ $this->app->bind(PodcastPublisher::class, TransistorPublisher::class);
 ```
 
 ---
+
+<br>
 
 ### PSR-11
 
