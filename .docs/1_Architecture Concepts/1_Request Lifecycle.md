@@ -2,6 +2,8 @@
 
 ## Giriş  
 <br>
+
+
 Gerçek dünyada herhangi bir aracı kullanırken, o aracın nasıl çalıştığını anlarsanız kendinizi daha güvende hissedersiniz. Uygulama geliştirme de farklı değildir. Geliştirme araçlarınızın nasıl çalıştığını anladığınızda, onları kullanırken daha rahat ve kendinizden emin hissedersiniz.  
 
 Bu belgenin amacı, Laravel framework'ünün nasıl çalıştığına dair iyi bir genel bakış sağlamaktır. Framework’ün genel yapısını daha iyi tanıyarak, her şey daha az “büyülü” görünür ve uygulamalarınızı oluştururken daha fazla güven duyarsınız. Tüm terimleri hemen anlamazsanız üzülmeyin! Sadece neler olup bittiğine dair temel bir anlayış kazanmaya çalışın; diğer dokümantasyon bölümlerini keşfettikçe bilginiz artacaktır.  
@@ -9,10 +11,14 @@ Bu belgenin amacı, Laravel framework'ünün nasıl çalıştığına dair iyi b
 ---
 <br>
 
+
+
 ## Yaşam Döngüsü Genel Bakış  
 
 ### İlk Adımlar  
 <br>
+
+
 
 Bir Laravel uygulamasına gelen tüm isteklerin giriş noktası `public/index.php` dosyasıdır. Web sunucusu (Apache / Nginx) yapılandırmanız, tüm istekleri bu dosyaya yönlendirir. `index.php` dosyası çok fazla kod içermez. Bunun yerine, framework’ün geri kalanını yüklemek için bir başlangıç noktasıdır.  
 
@@ -20,8 +26,12 @@ Bir Laravel uygulamasına gelen tüm isteklerin giriş noktası `public/index.ph
 
 <br>
 
+
+
 ### HTTP / Console Kernels 
-<br> 
+<br>
+
+ 
 Sonraki adımda, gelen istek uygulama örneğinin `handleRequest` veya `handleCommand` metodları kullanılarak HTTP kernel veya console kernel’e gönderilir; bu, uygulamaya giren isteğin türüne bağlıdır. Bu iki kernel, tüm isteklerin geçtiği merkezi yerlerdir. Şimdilik, `Illuminate\Foundation\Http\Kernel` örneği olan HTTP kernel’e odaklanalım.  
 
 HTTP kernel, isteğin yürütülmesinden önce çalıştırılacak bir dizi **bootstrapper** tanımlar. Bu bootstrapper’lar hata yönetimini yapılandırır, loglamayı ayarlar, uygulama ortamını algılar ve isteğin gerçekten işlenmesinden önce yapılması gereken diğer görevleri gerçekleştirir. Genellikle bu sınıflar, sizin endişelenmenize gerek olmayan Laravel’in dahili yapılandırmasını yönetir.  
@@ -32,8 +42,12 @@ HTTP kernel’in `handle` metodunun imzası oldukça basittir: bir `Request` al�
 
 <br>
 
+
+
 ### Service Providers 
-<br> 
+<br>
+
+ 
 Kernel’in en önemli başlatma adımlarından biri, uygulamanızın **service provider**’larını yüklemektir. Service provider’lar framework’ün veritabanı, queue, validation ve routing gibi çeşitli bileşenlerini başlatmaktan sorumludur.  
 
 Laravel bu provider listesini döngüyle gezer ve her birini başlatır. Provider’lar başlatıldıktan sonra, tüm provider’larda `register` metodu çağrılır. Ardından, tüm provider’lar kayıt olduktan sonra, her bir provider’da `boot` metodu çağrılır. Bu, service provider’ların `boot` metodları yürütülmeden önce tüm container binding’lerinin kayıtlı ve kullanılabilir olmasını sağlar.  
@@ -44,8 +58,12 @@ Framework dahili olarak onlarca service provider kullanırken, kendi provider’
 
 <br>
 
+
+
 ### Routing  
 <br>
+
+
 
 Uygulama başlatıldıktan ve tüm service provider’lar kayıt olduktan sonra, `Request` yönlendirme (router) tarafından dağıtılmak üzere devredilir. Router isteği bir route veya controller’a yönlendirir ve rota bazlı middleware’ları da çalıştırır.  
 
@@ -57,6 +75,8 @@ Eğer istek, eşleşen rotanın tüm middleware’larından geçerse, rota veya 
 
 <br>
 
+
+
 ### Sonuç 
 
 Rota veya controller metodu bir yanıt döndürdüğünde, yanıt uygulamanın çıkış yönünde rotanın middleware’larından geçer; bu, uygulamaya giden yanıtı değiştirme veya inceleme fırsatı verir.  
@@ -65,8 +85,12 @@ Son olarak, yanıt middleware’lardan geçtikten sonra HTTP kernel’in `handle
 
 <br>
 
+
+
 ### Service Provider’lara Odaklanma  
 <br>
+
+
 Service provider’lar, bir Laravel uygulamasını başlatmanın gerçek anahtarıdır. Uygulama örneği oluşturulur, service provider’lar kaydedilir ve istek başlatılmış uygulamaya devredilir. Aslında bu kadar basittir!  
 
 Bir Laravel uygulamasının service provider’lar aracılığıyla nasıl oluşturulduğunu ve başlatıldığını sağlam bir şekilde kavramak oldukça değerlidir. Uygulamanızın kullanıcı tanımlı service provider’ları `app/Providers` dizininde saklanır.  

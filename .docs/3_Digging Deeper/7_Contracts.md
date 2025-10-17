@@ -1,8 +1,12 @@
-````markdown
+
 <br>
+
+
 ## Contracts
 
 <br>
+
+
 ### Introduction
 
 Laravel’in **“contracts”** (sözleşmeler) kavramı, framework tarafından sağlanan temel servisleri tanımlayan bir dizi arayüzdür (interface).  
@@ -16,6 +20,8 @@ Tüm Laravel contracts’ları kendi GitHub deposunda bulunur.
 Bu, mevcut tüm sözleşmelere hızlı bir şekilde başvurmanızı sağlar ve Laravel servisleriyle etkileşen paketler geliştirirken kullanılabilecek bağımsız bir pakettir.
 
 <br>
+
+
 ### Contracts vs. Facades
 
 Laravel’in **facade**’leri ve yardımcı fonksiyonları (helper functions), servis container üzerinden contract çözümlemesi yapmadan Laravel servislerini kullanmanın basit bir yolunu sunar.  
@@ -26,6 +32,9 @@ Bazı geliştiriciler bu şekilde açık bağımlılık tanımlamayı tercih ede
 Genel olarak, çoğu uygulama geliştirme sürecinde facadeleri sorunsuzca kullanabilir.
 
 <br>
+
+
+
 ### When to Use Contracts
 
 Contracts veya facadeleri kullanma kararı, sizin ve ekibinizin tercihlerine bağlıdır.  
@@ -37,6 +46,9 @@ Genel olarak, çoğu uygulama geliştirme sırasında facadeleri rahatlıkla kul
 Ancak birden fazla PHP framework’üyle entegre olacak bir paket geliştiriyorsanız, `illuminate/contracts` paketini kullanarak Laravel servisleriyle etkileşimi tanımlayabilir, paketinizin `composer.json` dosyasına Laravel’in somut implementasyonlarını eklemeyebilirsiniz.
 
 <br>
+
+
+
 ### How to Use Contracts
 
 Peki bir contract’ın implementasyonunu nasıl elde edersiniz? Aslında oldukça basittir.
@@ -78,6 +90,8 @@ Event listener çözülürken, servis container sınıfın constructor’ındaki
 Servis container’a nasıl kayıt yapılacağı hakkında daha fazla bilgi için container dokümantasyonuna bakabilirsiniz.
 
 <br>
+
+
 ### Contract Reference
 
 Aşağıdaki tablo, tüm Laravel contracts’larına ve bunların karşılık gelen facadelerine hızlı bir başvuru sağlar:

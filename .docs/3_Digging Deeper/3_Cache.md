@@ -2,9 +2,13 @@
 <br>
 
 
+
+
 ## Cache
 
 <br>
+
+
 
 
 ### Introduction
@@ -16,6 +20,8 @@ Neyse ki, Laravel çeşitli cache backend'leri için ifade gücü yüksek ve bir
 <br>
 
 
+
+
 ### Configuration
 
 Uygulamanızın cache yapılandırma dosyası `config/cache.php` konumunda bulunur. Bu dosyada, uygulamanız genelinde varsayılan olarak hangi cache store’un kullanılacağını belirleyebilirsiniz. Laravel, kutudan çıktığı haliyle Memcached, Redis, DynamoDB ve ilişkisel veritabanları gibi popüler cache backend'lerini destekler. Ayrıca, dosya tabanlı bir cache driver’ı da mevcuttur; `array` ve `null` cache driver’ları ise otomatik testleriniz için uygun geçici cache çözümleri sağlar.
@@ -25,9 +31,13 @@ Cache yapılandırma dosyasında gözden geçirebileceğiniz çeşitli diğer se
 <br>
 
 
+
+
 ### Driver Prerequisites
 
 <br>
+
+
 
 
 #### Database
@@ -41,6 +51,8 @@ php artisan migrate
 ````
 
 <br>
+
+
 
 
 #### Memcached
@@ -76,6 +88,8 @@ Gerekirse, `host` seçeneğini bir UNIX socket yoluna ayarlayabilirsiniz. Bu dur
 <br>
 
 
+
+
 #### Redis
 
 Laravel ile Redis cache kullanmadan önce, PECL üzerinden PhpRedis PHP eklentisini kurmanız veya Composer üzerinden `predis/predis` paketini (~2.0) yüklemeniz gerekir. Laravel Sail bu eklentiyi zaten içerir. Ayrıca, Laravel Cloud ve Laravel Forge gibi resmi Laravel platformlarında PhpRedis varsayılan olarak yüklüdür.
@@ -83,6 +97,8 @@ Laravel ile Redis cache kullanmadan önce, PECL üzerinden PhpRedis PHP eklentis
 Redis’in yapılandırılması hakkında daha fazla bilgi için Laravel’in Redis dokümantasyon sayfasına bakın.
 
 <br>
+
+
 
 
 #### DynamoDB
@@ -115,6 +131,8 @@ Ayrıca, DynamoDB cache store yapılandırma seçenekleri için değerlerin sağ
 <br>
 
 
+
+
 #### MongoDB
 
 Eğer MongoDB kullanıyorsanız, `mongodb/laravel-mongodb` resmi paketi tarafından sağlanan bir `mongodb` cache driver’ı mevcuttur ve bu driver, bir MongoDB veritabanı bağlantısı kullanılarak yapılandırılabilir. MongoDB, süresi dolmuş cache öğelerini otomatik olarak silmek için TTL index’lerini destekler.
@@ -124,9 +142,13 @@ MongoDB yapılandırması hakkında daha fazla bilgi için MongoDB Cache ve Lock
 <br>
 
 
+
+
 ### Cache Usage
 
 <br>
+
+
 
 
 #### Obtaining a Cache Instance
@@ -156,6 +178,8 @@ class UserController extends Controller
 <br>
 
 
+
+
 #### Accessing Multiple Cache Stores
 
 `Cache` facade’ını kullanarak, `store` metoduna bir parametre geçerek farklı cache store’lara erişebilirsiniz. Bu parametre, `config/cache.php` dosyanızdaki `stores` dizisinde tanımlı store anahtarlarından biri olmalıdır:
@@ -167,6 +191,8 @@ Cache::store('redis')->put('bar', 'baz', 600); // 10 dakika
 ```
 
 <br>
+
+
 
 
 #### Retrieving Items From the Cache
@@ -190,6 +216,8 @@ $value = Cache::get('key', function () {
 <br>
 
 
+
+
 #### Determining Item Existence
 
 Bir öğenin cache’te mevcut olup olmadığını kontrol etmek için `has` metodunu kullanabilirsiniz. Bu metod, öğe mevcut olsa bile değeri `null` ise `false` döndürür:
@@ -201,6 +229,8 @@ if (Cache::has('key')) {
 ```
 
 <br>
+
+
 
 
 #### Incrementing / Decrementing Values
@@ -217,6 +247,8 @@ Cache::decrement('key', $amount);
 ```
 
 <br>
+
+
 
 
 #### Retrieve and Store
@@ -242,6 +274,8 @@ $value = Cache::rememberForever('users', function () {
 <br>
 
 
+
+
 #### Stale While Revalidate
 
 `Cache::remember` metodunu kullanırken, bazı kullanıcılar cache süresi dolduğunda yavaş yanıt süreleriyle karşılaşabilir. Bazı veri türleri için, cache’lenmiş değer arka planda yeniden hesaplanırken kısmen eski verilerin sunulmasına izin vermek faydalıdır. Bu yaklaşım "stale-while-revalidate" deseni olarak bilinir ve `Cache::flexible` metodu bu deseni uygular.
@@ -255,6 +289,8 @@ $value = Cache::flexible('users', [5, 10], function () {
 ```
 
 <br>
+
+
 
 
 #### Retrieve and Delete
@@ -271,9 +307,13 @@ $value = Cache::pull('key', 'default');
 <br>
 
 
+
+
 ## Storing Items in the Cache
 
 <br>
+
+
 
 
 ### Cache’e Veri Kaydetme
@@ -299,6 +339,8 @@ Cache::put('key', 'value', now()->addMinutes(10));
 <br>
 
 
+
+
 ### Store if Not Present
 
 `add` metodu, öğe cache’te zaten yoksa ekleme işlemini yapar. Öğe başarıyla eklendiyse `true`, zaten mevcutsa `false` döner. `add` metodu atomik bir işlemdir:
@@ -308,6 +350,8 @@ Cache::add('key', 'value', $seconds);
 ```
 
 <br>
+
+
 
 
 ### Storing Items Forever
@@ -321,6 +365,8 @@ Cache::forever('key', 'value');
 Eğer `Memcached` driver’ını kullanıyorsanız, “süresiz” saklanan öğeler cache kapasitesi dolduğunda silinebilir.
 
 <br>
+
+
 
 
 ### Removing Items From the Cache
@@ -348,6 +394,8 @@ Cache::flush();
 > ⚠️ `flush` metodu, yapılandırılmış cache “prefix”’inizi dikkate almaz ve cache’teki **tüm** girişleri kaldırır. Bu, başka uygulamalarla paylaşılan bir cache temizlenirken dikkat edilmesi gereken bir durumdur.
 
 <br>
+
+
 
 
 ### Cache Memoization
@@ -396,6 +444,8 @@ Cache::memo()->get('name');           // Yeniden cache'e erişir...
 <br>
 
 
+
+
 ### The Cache Helper
 
 `Cache` facade’ı yerine, global `cache` fonksiyonunu da kullanabilirsiniz. Bu fonksiyon, cache üzerinden veri almak ve saklamak için kısa bir alternatif sağlar.
@@ -427,11 +477,15 @@ Global `cache` fonksiyonunu test ederken, `Cache::shouldReceive` metodunu `facad
 <br>
 
 
+
+
 ### Cache Tags
 
 > `file`, `dynamodb` veya `database` cache driver’ları kullanıldığında cache etiketleri desteklenmez.
 
 <br>
+
+
 
 
 #### Storing Tagged Cache Items
@@ -448,6 +502,8 @@ Cache::tags(['people', 'authors'])->put('Anne', $anne, $seconds);
 <br>
 
 
+
+
 #### Accessing Tagged Cache Items
 
 Etiketli olarak kaydedilen öğelere, yalnızca aynı etiketlerle erişebilirsiniz. Bir öğeyi almak için `tags` metoduna etiketleri geçin ve ardından `get` metodunu çağırın:
@@ -459,6 +515,8 @@ $anne = Cache::tags(['people', 'authors'])->get('Anne');
 ```
 
 <br>
+
+
 
 
 #### Removing Tagged Cache Items
@@ -478,11 +536,15 @@ Cache::tags('authors')->flush();
 <br>
 
 
+
+
 ### Atomic Locks
 
 Bu özelliği kullanabilmek için uygulamanızın varsayılan cache driver’ı olarak `memcached`, `redis`, `dynamodb`, `database`, `file` veya `array` driver’larından birini kullanması gerekir. Ayrıca, tüm sunucuların aynı merkezi cache sunucusuyla iletişim kurması gerekir.
 
 <br>
+
+
 
 
 #### Managing Locks
@@ -539,9 +601,13 @@ Cache::lock('foo', 10)->block(5, function () {
 <br>
 
 
+
+
 ## Managing Locks Across Processes
 
 <br>
+
+
 
 
 ### İşlemler Arasında Kilitleri Yönetme
@@ -575,9 +641,13 @@ Cache::lock('processing')->forceRelease();
 <br>
 
 
+
+
 ## Adding Custom Cache Drivers
 
 <br>
+
+
 
 
 ### Writing the Driver
@@ -619,6 +689,8 @@ Cache::extend('mongo', function (Application $app) {
 Bu özel cache driver kodunu nereye yerleştireceğinizi merak ediyorsanız, `app` dizini altında bir `Extensions` namespace’i oluşturabilirsiniz. Ancak, Laravel’in katı bir uygulama yapısı olmadığını unutmayın; uygulamanızı kendi tercihlerinize göre organize edebilirsiniz.
 
 <br>
+
+
 
 
 ### Registering the Driver
@@ -666,6 +738,8 @@ class AppServiceProvider extends ServiceProvider
 Genişletmeniz (extension) kaydedildikten sonra, `.env` dosyasındaki `CACHE_STORE` değişkenini veya `config/cache.php` dosyasındaki varsayılan `store` seçeneğini, oluşturduğunuz özel driver adını kullanacak şekilde güncelleyin.
 
 <br>
+
+
 
 
 ## Events

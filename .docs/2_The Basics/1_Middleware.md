@@ -1,4 +1,4 @@
-````markdown
+
 Middleware  
 Giriş  
 Middleware, uygulamanıza giren HTTP isteklerini incelemek ve filtrelemek için kullanışlı bir mekanizma sağlar. Örneğin, Laravel, uygulamanızın kullanıcısının kimliğini doğrulayan bir middleware içerir. Eğer kullanıcı kimliği doğrulanmamışsa, middleware kullanıcıyı uygulamanızın giriş ekranına yönlendirir. Ancak, kullanıcı kimliği doğrulanmışsa, middleware isteğin uygulamaya daha ileriye gitmesine izin verir.
@@ -332,7 +332,7 @@ Route::put('/post/{id}', function (string $id) {
 })->middleware(EnsureUserHasRole::class.':editor,publisher');
 ```
 
-````markdown
+
 Terminable Middleware  
 Bazen bir middleware, HTTP yanıtı tarayıcıya gönderildikten sonra bazı işlemler yapmak isteyebilir. Eğer middleware’inizde bir terminate metodu tanımlarsanız ve web sunucunuz FastCGI kullanıyorsa, terminate metodu yanıt tarayıcıya gönderildikten sonra otomatik olarak çağrılacaktır:
 

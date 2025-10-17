@@ -1,6 +1,8 @@
 
 <br>
 
+
+
   
 
 ## Artisan Console
@@ -21,6 +23,8 @@ php artisan help migrate
 
 <br>
 
+
+
  
 
 ### Laravel Sail
@@ -33,6 +37,8 @@ Eğer yerel geliştirme ortamınız olarak **Laravel Sail** kullanıyorsanız, A
 
 <br>
 
+
+
   
 
 ### Tinker (REPL)
@@ -40,6 +46,8 @@ Eğer yerel geliştirme ortamınız olarak **Laravel Sail** kullanıyorsanız, A
 **Laravel Tinker**, Laravel framework’ü için **PsySH** paketi tarafından desteklenen güçlü bir REPL ortamıdır.
 
 <br>
+
+
 
    
 
@@ -54,6 +62,8 @@ composer require laravel/tinker
 Laravel uygulamanızla etkileşime girerken otomatik tamamlama, çok satırlı düzenleme ve canlı yenileme istiyorsanız **Tinkerwell**’e göz atabilirsiniz!
 
 <br>
+
+
 
 
 
@@ -75,6 +85,8 @@ php artisan vendor:publish --provider="Laravel\Tinker\TinkerServiceProvider"
 
 <br>
 
+
+
     
 
 #### Komut İzin Listesi
@@ -92,6 +104,8 @@ Daha fazla komuta izin vermek istiyorsanız, `tinker.php` yapılandırma dosyas�
 
 <br>
 
+
+
   
 
 #### Alias Verilmemesi Gereken Sınıflar
@@ -106,6 +120,8 @@ Genellikle Tinker, etkileşim sırasında sınıflara otomatik olarak alias veri
 
 <br>
 
+
+
    
 
 ## Komut Yazma
@@ -113,6 +129,8 @@ Genellikle Tinker, etkileşim sırasında sınıflara otomatik olarak alias veri
 Artisan ile birlikte gelen komutlara ek olarak, kendi özel komutlarınızı da oluşturabilirsiniz. Komutlar genellikle `app/Console/Commands` dizininde saklanır; ancak Laravel’i başka dizinleri de taraması için yapılandırırsanız farklı bir konum da seçebilirsiniz.
 
 <br>
+
+
 
  
 
@@ -125,6 +143,8 @@ php artisan make:command SendEmails
 ```
 
 <br>
+
+
 
    
 
@@ -175,6 +195,8 @@ Daha fazla kod tekrarını önlemek için, **console komutlarınızı olabildiğ
 
 <br>
 
+
+
   
 
 ### Çıkış Kodları
@@ -195,6 +217,8 @@ $this->fail('Something went wrong.');
 ```
 
 <br>
+
+
 
     
 
@@ -217,6 +241,8 @@ Closure, altta yatan komut örneğine bağlandığı için, tipik bir komut sın
 
 <br>
 
+
+
    
 
 ### Bağımlılıkları Type-Hint ile Belirtme
@@ -233,8 +259,10 @@ Artisan::command('mail:send {user}', function (DripEmailer $drip, string $user) 
 });
 ```
 
-````markdown
+
 <br>
+
+
 
 
 ## Closure Komut Açıklamaları
@@ -248,6 +276,8 @@ Artisan::command('mail:send {user}', function (string $user) {
 ````
 
 <br>
+
+
 
 
 
@@ -289,6 +319,8 @@ php artisan mail:send 1 --isolated=12
 
 
 
+
+
 ### Lock ID
 
 Varsayılan olarak, Laravel komutun adını kullanarak cache üzerinde atomik kilidi elde etmek için bir anahtar oluşturur. Ancak, bu anahtarı özelleştirmek isterseniz, komut sınıfınızda `isolatableId` metodunu tanımlayarak komutun argüman veya seçeneklerini anahtara dahil edebilirsiniz:
@@ -304,6 +336,8 @@ public function isolatableId(): string
 ```
 
 <br>
+
+
 
 
 
@@ -330,6 +364,8 @@ public function isolationLockExpiresAt(): DateTimeInterface|DateInterval
 
 
 
+
+
 ## Girdi Beklentilerini Tanımlama
 
 Console komutları yazarken, kullanıcıdan **argümanlar** veya **seçenekler (options)** aracılığıyla girdi almak oldukça yaygındır.
@@ -337,6 +373,8 @@ Laravel, bu girdileri `signature` özelliğiyle tanımlamayı son derece kolayla
 `signature` özelliği, komutun adını, argümanlarını ve seçeneklerini tek bir ifadede, route benzeri bir sözdizimiyle tanımlamanızı sağlar.
 
 <br>
+
+
 
 
 ### Argümanlar (Arguments)
@@ -364,6 +402,8 @@ Argümanları isteğe bağlı hale getirebilir veya varsayılan değerler tanım
 ```
 
 <br>
+
+
 
 
 
@@ -395,6 +435,8 @@ php artisan mail:send 1 --queue
 <br>
 
 
+
+
 ### Değer Alan Seçenekler
 
 Eğer bir seçenek bir değer almalıdır diyorsanız, seçenek adının sonuna bir `=` işareti ekleyin:
@@ -418,6 +460,8 @@ Bir seçeneğe varsayılan değer atamak için eşittir işaretinden sonra değe
 <br>
 
 
+
+
 ### Seçenek Kısayolları
 
 Bir seçeneğe kısayol atamak için, kısayolu seçenek adından önce belirtebilir ve araya `|` karakteri koyabilirsiniz:
@@ -433,6 +477,8 @@ php artisan mail:send 1 -Qdefault
 ```
 
 <br>
+
+
 
 
 ### Girdi Dizileri (Input Arrays)
@@ -459,6 +505,8 @@ php artisan mail:send 1 2
 <br>
 
 
+
+
 ### Seçenek Dizileri (Option Arrays)
 
 Bir seçenek birden fazla değer alacaksa, her değer komut satırında seçenek adıyla birlikte belirtilmelidir:
@@ -474,6 +522,8 @@ php artisan mail:send --id=1 --id=2
 ```
 
 <br>
+
+
 
 
 ### Girdi Açıklamaları (Input Descriptions)
@@ -493,6 +543,8 @@ protected $signature = 'mail:send
 ```
 
 <br>
+
+
 
 
 ## Eksik Girdi İçin Kullanıcıdan Bilgi İsteme (Prompting for Missing Input)
@@ -580,13 +632,17 @@ protected function afterPromptingForMissingArguments(InputInterface $input, Outp
 }
 ```
 
-````markdown
+
 <br>
+
+
 
 
 ## Komut Girdi / Çıktısı (Command I/O)
 
 <br>
+
+
 
 
 ### Girdi Alma (Retrieving Input)
@@ -623,6 +679,8 @@ $options = $this->options();
 ```
 
 <br>
+
+
 
 
 ### Kullanıcıdan Girdi İsteme (Prompting for Input)
@@ -663,6 +721,8 @@ $password = $this->secret('What is the password?');
 <br>
 
 
+
+
 ### Onay İsteme (Asking for Confirmation)
 
 Kullanıcıdan basit bir "evet veya hayır" cevabı almak isterseniz, `confirm` metodunu kullanabilirsiniz.
@@ -683,6 +743,8 @@ if ($this->confirm('Do you wish to continue?', true)) {
 ```
 
 <br>
+
+
 
 
 ### Otomatik Tamamlama (Auto-Completion)
@@ -710,6 +772,8 @@ $name = $this->anticipate('What is your address?', function (string $input) {
 ```
 
 <br>
+
+
 
 
 ### Çoktan Seçmeli Sorular (Multiple Choice Questions)
@@ -741,6 +805,8 @@ $name = $this->choice(
 ```
 
 <br>
+
+
 
 
 ## Çıktı Yazdırma (Writing Output)
@@ -790,6 +856,8 @@ $this->newLine(3);
 <br>
 
 
+
+
 ### Tablolar (Tables)
 
 `table` metodu, birden fazla satır ve sütundan oluşan verileri düzgün biçimlendirmek için kullanılır.
@@ -805,6 +873,8 @@ $this->table(
 ```
 
 <br>
+
+
 
 
 
@@ -844,8 +914,10 @@ Daha gelişmiş kullanım seçenekleri için **Symfony Progress Bar** bileşenin
 
 
 
-````markdown
+
 <br>
+
+
 
 ## Komutları Kaydetme (Registering Commands)
 
@@ -871,6 +943,8 @@ use App\Domain\Orders\Commands\SendEmails;
 Artisan başlatıldığında, uygulamanızdaki tüm komutlar **service container** tarafından çözümlenir ve Artisan’a kaydedilir.
 
 <br>
+
+
 
 ## Komutları Programatik Olarak Çalıştırma (Programmatically Executing Commands)
 
@@ -903,6 +977,8 @@ Artisan::call('mail:send 1 --queue=default');
 
 <br>
 
+
+
 ### Dizi Değerleri Gönderme (Passing Array Values)
 
 Komutunuz bir dizi değer kabul eden bir seçenek tanımlıyorsa, o seçeneğe bir dizi değer gönderebilirsiniz:
@@ -920,6 +996,8 @@ Route::post('/mail', function () {
 
 <br>
 
+
+
 ### Boolean Değerler Gönderme (Passing Boolean Values)
 
 Eğer komut, string değer kabul etmeyen bir seçenek içeriyorsa (örneğin `migrate:refresh` komutundaki `--force` bayrağı gibi),
@@ -932,6 +1010,8 @@ $exitCode = Artisan::call('migrate:refresh', [
 ```
 
 <br>
+
+
 
 ## Artisan Komutlarını Kuyruğa Ekleme (Queueing Artisan Commands)
 
@@ -960,6 +1040,8 @@ Artisan::queue('mail:send', [
 ```
 
 <br>
+
+
 
 ## Diğer Komutlardan Komut Çağırma (Calling Commands From Other Commands)
 
@@ -991,6 +1073,8 @@ $this->callSilently('mail:send', [
 ```
 
 <br>
+
+
 
 ## Sinyal Yönetimi (Signal Handling)
 
@@ -1024,6 +1108,8 @@ $this->trap([SIGTERM, SIGQUIT], function (int $signal) {
 
 <br>
 
+
+
 ## Stub Özelleştirme (Stub Customization)
 
 Artisan’ın `make` komutları, **controller**, **job**, **migration**, ve **test** gibi çeşitli sınıflar oluşturmak için kullanılır.
@@ -1040,6 +1126,8 @@ Yayınlanan stub dosyaları, uygulamanızın kök dizininde **stubs/** klasörü
 Bu dosyalarda yaptığınız tüm değişiklikler, Artisan’ın ilgili `make` komutları çalıştırıldığında oluşturulan dosyalara yansıtılır.
 
 <br>
+
+
 
 ## Olaylar (Events)
 

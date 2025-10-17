@@ -2,9 +2,13 @@
 <br>
 
 
+
+
 ## Broadcasting
 
 <br>
+
+
 
 ### Introduction
 
@@ -18,6 +22,8 @@ Yayınlamanın temel kavramları basittir: istemciler ön tarafta isimlendirilmi
 
 <br>
 
+
+
 ### Supported Drivers
 
 Varsayılan olarak, Laravel üç sunucu tarafı yayınlama sürücüsünü destekler: **Laravel Reverb**, **Pusher Channels** ve **Ably**.
@@ -25,6 +31,8 @@ Varsayılan olarak, Laravel üç sunucu tarafı yayınlama sürücüsünü deste
 Olay yayınlamaya dalmadan önce, Laravel’in **events and listeners** belgelerini okuduğunuzdan emin olun.
 
 <br>
+
+
 
 ### Quickstart
 
@@ -42,6 +50,8 @@ Tüm yayınlama yapılandırmanız `config/broadcasting.php` dosyasında saklan�
 
 <br>
 
+
+
 ### Next Steps
 
 Olay yayınlamayı etkinleştirdikten sonra, yayınlanacak olayların nasıl tanımlanacağını ve olayların nasıl dinleneceğini öğrenmeye hazırsınız. Laravel’in **React** veya **Vue** starter kit’lerini kullanıyorsanız, olayları **Echo**’nun `useEcho` hook’u ile dinleyebilirsiniz.
@@ -50,6 +60,8 @@ Herhangi bir olayı yayınlamadan önce, bir **queue worker** yapılandırıp ç
 
 <br>
 
+
+
 ### Server Side Installation
 
 Laravel’in olay yayınlama özelliğini kullanmaya başlamak için, Laravel uygulamanızda birkaç yapılandırma yapmanız ve bazı paketleri yüklemeniz gerekir.
@@ -57,6 +69,8 @@ Laravel’in olay yayınlama özelliğini kullanmaya başlamak için, Laravel uy
 Olay yayınlama, Laravel **Echo** (bir JavaScript kütüphanesi) tarafından tarayıcı istemcisinde alınabilecek şekilde, Laravel event’lerinizi yayınlayan bir **server-side broadcasting driver** tarafından gerçekleştirilir. Endişelenmeyin — kurulum sürecinin her adımını tek tek inceleyeceğiz.
 
 <br>
+
+
 
 ### Reverb
 
@@ -69,6 +83,8 @@ php artisan install:broadcasting --reverb
 Bu komut, Reverb için gerekli **Composer** ve **NPM** paketlerini yükler ve `.env` dosyanızı uygun değişkenlerle günceller.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -88,6 +104,8 @@ Ayrıntılı Reverb kurulum ve kullanım talimatlarını **Reverb documentation*
 
 <br>
 
+
+
 ### Pusher Channels
 
 Laravel’in yayınlama özelliklerini **Pusher** kullanarak etkinleştirmek için şu komutu çalıştırın:
@@ -99,6 +117,8 @@ php artisan install:broadcasting --pusher
 Bu komut sizden Pusher kimlik bilgilerinizi ister, gerekli **PHP** ve **JavaScript SDK**’larını yükler ve `.env` dosyanızı günceller.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -130,6 +150,8 @@ Son olarak, istemci tarafında yayınlanan olayları almak için **Laravel Echo*
 
 <br>
 
+
+
 ### Ably
 
 Aşağıdaki belgeler, **Ably**’nin “Pusher uyumluluk” modunda nasıl kullanılacağını açıklar. Ancak **Ably** ekibi, Ably’nin özel yeteneklerinden yararlanabilen kendi yayıncı ve **Echo client** sürücülerini önermekte ve bakımını yapmaktadır. Daha fazla bilgi için **Ably’s Laravel broadcaster documentation**’a bakın.
@@ -145,6 +167,8 @@ Bu komut sizden Ably kimlik bilgilerinizi ister, gerekli **PHP** ve **JavaScript
 Devam etmeden önce, Ably uygulama ayarlarında **Pusher protocol support**’u etkinleştirmelisiniz. Bu ayar, Ably kontrol panelinizdeki **“Protocol Adapter Settings”** kısmında bulunur.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -172,9 +196,13 @@ Son olarak, istemci tarafında olayları almak için **Laravel Echo**’yu yükl
 
 <br>
 
+
+
 ## Client Side Installation
 
 <br>
+
+
 
 ### Reverb
 
@@ -183,6 +211,8 @@ Son olarak, istemci tarafında olayları almak için **Laravel Echo**’yu yükl
 `install:broadcasting` Artisan komutu aracılığıyla **Laravel Reverb** kurulumunu yaptığınızda, **Reverb** ve **Echo**’nun yapılandırması ve dosya iskeleti otomatik olarak uygulamanıza eklenir. Ancak Laravel Echo’yu manuel olarak yapılandırmak isterseniz, aşağıdaki adımları izleyebilirsiniz.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -221,6 +251,8 @@ Laravel Echo’nun **Reverb broadcaster** desteği için `laravel-echo` sürüm�
 
 <br>
 
+
+
 ### Pusher Channels
 
 **Laravel Echo**, sunucu tarafı yayın sürücünüz tarafından yayınlanan olaylara abone olmayı ve dinlemeyi kolaylaştıran bir **JavaScript** kütüphanesidir.
@@ -228,6 +260,8 @@ Laravel Echo’nun **Reverb broadcaster** desteği için `laravel-echo` sürüm�
 `install:broadcasting --pusher` Artisan komutunu kullanarak yayın desteğini etkinleştirdiğinizde, **Pusher** ve **Echo**’nun yapılandırması ve dosya iskeleti otomatik olarak uygulamanıza eklenir. Ancak Laravel Echo’yu manuel olarak yapılandırmak isterseniz, aşağıdaki adımları izleyebilirsiniz.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -282,6 +316,8 @@ Uygulamanızın **JavaScript** varlıklarının derlenmesi hakkında daha fazla 
 
 <br>
 
+
+
 #### Using an Existing Client Instance
 
 Halihazırda önceden yapılandırılmış bir **Pusher Channels client instance**’ınız varsa, bunu **Echo**’ya `client` yapılandırma seçeneğiyle geçebilirsiniz:
@@ -303,6 +339,8 @@ window.Echo = new Echo({
 
 <br>
 
+
+
 ### Ably
 
 Aşağıdaki belgeler, **Ably**’nin “Pusher uyumluluk” modunda nasıl kullanılacağını açıklar. Ancak **Ably** ekibi, Ably’nin sunduğu özel yeteneklerden yararlanabilen kendi **broadcaster** ve **Echo client** sürücülerini önermekte ve bakımını yapmaktadır. Daha fazla bilgi için **Ably’s Laravel broadcaster documentation**’a başvurabilirsiniz.
@@ -312,6 +350,8 @@ Aşağıdaki belgeler, **Ably**’nin “Pusher uyumluluk” modunda nasıl kull
 `install:broadcasting --ably` Artisan komutu ile yayın desteğini kurduğunuzda, **Ably** ve **Echo** yapılandırmaları otomatik olarak uygulamanıza eklenir. Ancak manuel kurulum yapmak isterseniz, aşağıdaki adımları izleyebilirsiniz.
 
 <br>
+
+
 
 #### Manual Installation
 
@@ -354,15 +394,21 @@ Uygulamanızın **JavaScript** varlıklarının derlenmesi hakkında daha fazla 
 
 <br>
 
+
+
 ## Concept Overview
 
 <br>
+
+
 
 **Laravel’in event broadcasting** özelliği, **WebSocket** tabanlı bir yaklaşım kullanarak sunucu tarafındaki Laravel event’lerinizi istemci tarafındaki JavaScript uygulamanıza yayınlamanızı sağlar. Şu anda Laravel, **Laravel Reverb**, **Pusher Channels** ve **Ably** sürücüleriyle birlikte gelir. Bu event’ler, istemci tarafında **Laravel Echo** JavaScript paketi aracılığıyla kolayca dinlenebilir.
 
 Event’ler “kanallar” (**channels**) üzerinden yayınlanır. Bu kanallar **public** (herkese açık) veya **private** (özel) olarak tanımlanabilir. Uygulamanızın herhangi bir ziyaretçisi bir public kanala kimlik doğrulaması olmadan abone olabilir; ancak private bir kanala abone olabilmek için kullanıcının kimliği doğrulanmış ve yetkilendirilmiş olması gerekir.
 
 <br>
+
+
 
 ### Using an Example Application
 
@@ -377,6 +423,8 @@ OrderShipmentStatusUpdated::dispatch($order);
 ````
 
 <br>
+
+
 
 ### The ShouldBroadcast Interface
 
@@ -443,6 +491,8 @@ public function broadcastOn(): array
 
 <br>
 
+
+
 ### Authorizing Channels
 
 Kullanıcıların private kanallarda dinleme yapabilmesi için yetkilendirilmiş olması gerekir. Kanal yetkilendirme kurallarını `routes/channels.php` dosyasında tanımlayabilirsiniz. Örneğin, `private orders.1` kanalında dinleme yapmak isteyen kullanıcının gerçekten o siparişi oluşturduğunu doğrulamamız gerekir:
@@ -462,6 +512,8 @@ Tüm yetkilendirme callback’leri, ilk argüman olarak kimliği doğrulanmış 
 
 <br>
 
+
+
 ### Listening for Event Broadcasts
 
 Şimdi geriye sadece event’i JavaScript tarafında dinlemek kalıyor. Bunu **Laravel Echo** kullanarak kolayca yapabiliriz. Laravel Echo’nun **React** ve **Vue** için yerleşik **hooks**’ları vardır ve varsayılan olarak event’in tüm public özellikleri broadcast edilir:
@@ -479,6 +531,8 @@ useEcho(
 ```
 
 <br>
+
+
 
 ### Defining Broadcast Events
 
@@ -520,6 +574,8 @@ Bu interface’i uyguladıktan sonra, event’i normal şekilde tetiklemeniz yet
 
 <br>
 
+
+
 ### Broadcast Name
 
 Varsayılan olarak, Laravel event’i sınıf adını kullanarak yayınlar. Ancak yayın adını özelleştirmek isterseniz **broadcastAs** metodunu tanımlayabilirsiniz:
@@ -543,6 +599,8 @@ Yayın adını **broadcastAs** ile özelleştirirseniz, **Echo** dinleyicinizde 
 ```
 
 <br>
+
+
 
 ### Broadcast Data
 
@@ -574,6 +632,8 @@ public function broadcastWith(): array
 ```
 
 <br>
+
+
 
 ### Broadcast Queue
 
@@ -610,6 +670,8 @@ class OrderShipmentStatusUpdated implements ShouldBroadcastNow
 
 <br>
 
+
+
 ### Broadcast Conditions
 
 Bazen event’in yalnızca belirli bir koşul doğru olduğunda yayınlanmasını isteyebilirsiniz. Bunun için **broadcastWhen** metodunu kullanabilirsiniz:
@@ -622,6 +684,8 @@ public function broadcastWhen(): bool
 ```
 
 <br>
+
+
 
 ### Broadcasting and Database Transactions
 
@@ -650,9 +714,13 @@ Bu konudaki olası sorunları çözmek için, **queued jobs** ve **database tran
 
 <br>
 
+
+
 ## Authorizing Channels
 
 <br>
+
+
 
 ### Private Channels
 
@@ -663,6 +731,8 @@ Bu konudaki olası sorunları çözmek için, **queued jobs** ve **database tran
 Yayınlama etkinleştirildiğinde, Laravel otomatik olarak yetkilendirme isteklerini işlemek için `/broadcasting/auth` rotasını kaydeder. Bu rota, **web middleware group** içerisinde yer alır.
 
 <br>
+
+
 
 ### Defining Authorization Callbacks
 
@@ -688,6 +758,8 @@ php artisan channel:list
 
 <br>
 
+
+
 ### Authorization Callback Model Binding
 
 Tıpkı HTTP rotalarında olduğu gibi, kanal rotaları da **route model binding** kullanabilir. Örneğin, bir **order ID** yerine doğrudan bir **Order** modeli isteyebilirsiniz:
@@ -705,6 +777,8 @@ HTTP route model binding’den farklı olarak, kanal model binding **scoping**�
 
 <br>
 
+
+
 ### Authorization Callback Authentication
 
 Private ve **presence** broadcast kanalları, varsayılan kimlik doğrulama guard’ınızı kullanarak kullanıcıyı doğrular. Kullanıcı kimliği doğrulanmamışsa, kanal yetkilendirmesi otomatik olarak reddedilir ve callback hiç çalıştırılmaz.
@@ -718,6 +792,8 @@ Broadcast::channel('channel', function () {
 ```
 
 <br>
+
+
 
 ### Defining Channel Classes
 
@@ -762,6 +838,8 @@ Tıpkı diğer Laravel sınıfları gibi, channel class’lar da **service conta
 
 <br>
 
+
+
 ## Broadcasting Events
 
 Bir event tanımladıktan ve onu **ShouldBroadcast** interface’i ile işaretledikten sonra, sadece **dispatch** metodu ile tetiklemeniz yeterlidir. Event dispatcher, event’in yayınlanabilir olduğunu algılar ve kuyruğa alarak yayınlar:
@@ -773,6 +851,8 @@ OrderShipmentStatusUpdated::dispatch($order);
 ```
 
 <br>
+
+
 
 ### Only to Others
 
@@ -790,6 +870,8 @@ Bu yöntemi kullanabilmek için event’in **InteractsWithSockets** trait’ini 
 
 <br>
 
+
+
 ### Configuration
 
 Bir **Laravel Echo** örneği başlatıldığında, bağlantıya bir **socket ID** atanır. Eğer **Axios**’u global olarak kullanıyorsanız, bu socket ID otomatik olarak tüm HTTP isteklerine `X-Socket-ID` başlığıyla eklenir.
@@ -803,6 +885,8 @@ var socketId = Echo.socketId();
 ```
 
 <br>
+
+
 
 ### Customizing the Connection
 
@@ -840,6 +924,8 @@ class OrderShipmentStatusUpdated implements ShouldBroadcast
 ```
 
 <br>
+
+
 
 ## Anonymous Events
 
@@ -901,6 +987,8 @@ Broadcast::on('orders.'.$order->id)
 
 <br>
 
+
+
 ### Rescuing Broadcasts
 
 Kuyruk sunucusu devre dışıysa veya Laravel bir yayın sırasında hata alırsa, genellikle bir istisna (**exception**) fırlatılır ve bu durum kullanıcıya hata olarak yansıyabilir. Ancak yayınlama işlemleri genellikle uygulamanızın temel işleviyle ilgili olmadığı için, bu hataları bastırmak isteyebilirsiniz. Bunun için **ShouldRescue** interface’ini kullanabilirsiniz.
@@ -925,9 +1013,13 @@ class ServerCreated implements ShouldBroadcast, ShouldRescue
 
 <br>
 
+
+
 ## Receiving Broadcasts
 
 <br>
+
+
 
 ### Listening for Events
 
@@ -953,6 +1045,8 @@ Echo.private(`orders.${this.order.id}`)
 
 <br>
 
+
+
 ### Stop Listening for Events
 
 Belirli bir event’i dinlemeyi bırakmak (kanaldan ayrılmadan) istiyorsanız, **stopListening** metodunu kullanabilirsiniz:
@@ -963,6 +1057,8 @@ Echo.private(`orders.${this.order.id}`)
 ```
 
 <br>
+
+
 
 ### Leaving a Channel
 
@@ -979,6 +1075,8 @@ Echo.leave(`orders.${this.order.id}`);
 ```
 
 <br>
+
+
 
 ### Namespaces
 
@@ -1003,6 +1101,8 @@ Echo.channel('orders')
 ```
 
 <br>
+
+
 
 ## Using React or Vue
 
@@ -1056,6 +1156,8 @@ useEcho<OrderData>(`orders.${orderId}`, "OrderShipmentStatusUpdated", (e) => {
 
 <br>
 
+
+
 **useEcho** hook’u, component kaldırıldığında (unmount edildiğinde) kanaldan otomatik olarak ayrılır.  
 Ancak, gerektiğinde dinlemeyi programatik olarak başlatmak veya durdurmak için döndürülen yardımcı fonksiyonları kullanabilirsiniz:
 
@@ -1085,6 +1187,8 @@ leave();
 
 <br>
 
+
+
 ### Connecting to Public Channels
 
 Bir **public channel**’a bağlanmak için **useEchoPublic** hook’unu kullanabilirsiniz:
@@ -1098,6 +1202,8 @@ useEchoPublic("posts", "PostPublished", (e) => {
 ```
 
 <br>
+
+
 
 ### Connecting to Presence Channels
 
@@ -1113,12 +1219,16 @@ useEchoPresence("posts", "PostPublished", (e) => {
 
 <br>
 
+
+
 ## Presence Channels
 
 **Presence channels**, private kanalların güvenliğini korurken, aynı zamanda kanala hangi kullanıcıların abone olduğunu da bilmenizi sağlar.
 Bu özellik, aynı sayfayı görüntüleyen kullanıcıları listelemek veya bir sohbet odasındaki kullanıcıları göstermek gibi **gerçek zamanlı işbirliği** özelliklerini kolayca oluşturmanıza olanak tanır.
 
 <br>
+
+
 
 ### Authorizing Presence Channels
 
@@ -1139,6 +1249,8 @@ Broadcast::channel('chat.{roomId}', function (User $user, int $roomId) {
 ```
 
 <br>
+
+
 
 ### Joining Presence Channels
 
@@ -1167,6 +1279,8 @@ Echo.join(`chat.${roomId}`)
 ```
 
 <br>
+
+
 
 ### Broadcasting to Presence Channels
 
@@ -1201,12 +1315,16 @@ Echo.join(`chat.${roomId}`)
         // ...
     });
 ```
-````markdown
+
 <br>
+
+
 
 ## Model Broadcasting
 
 <br>
+
+
 
 ### Introduction
 
@@ -1218,6 +1336,8 @@ Ancak, bu event’leri yalnızca yayınlama amacıyla kullanıyorsanız, her mod
 Bu durumu kolaylaştırmak için Laravel, bir **Eloquent modelinin** durum değişikliklerini **otomatik olarak broadcast** etmesini sağlar.
 
 <br>
+
+
 
 ### Broadcasting a Model Automatically
 
@@ -1283,6 +1403,8 @@ public function broadcastOn(string $event): array
 
 <br>
 
+
+
 ### Customizing Model Broadcasting Event Creation
 
 Bazen Laravel’in model broadcasting event’ini nasıl oluşturduğunu özelleştirmek isteyebilirsiniz.
@@ -1302,9 +1424,13 @@ protected function newBroadcastableEvent(string $event): BroadcastableModelEvent
 
 <br>
 
+
+
 ## Model Broadcasting Conventions
 
 <br>
+
+
 
 ### Channel Conventions
 
@@ -1357,6 +1483,8 @@ $user->broadcastChannel(); // App.Models.User.1
 
 <br>
 
+
+
 ### Event Conventions
 
 Model broadcast event’leri, uygulamanızın `App\Events` dizininde tanımlı “gerçek” event sınıflarına ait değildir.
@@ -1407,6 +1535,8 @@ public function broadcastWith(string $event): array
 
 <br>
 
+
+
 ## Listening for Model Broadcasts
 
 Modelinize **BroadcastsEvents** trait’i ekledikten ve **broadcastOn** metodunu tanımladıktan sonra, artık istemci tarafında model broadcast event’lerini dinleyebilirsiniz.
@@ -1424,6 +1554,8 @@ Echo.private(`App.Models.User.${this.user.id}`)
 Event adının başına bir **nokta (.)** eklenmesi gerekir, çünkü bu event belirli bir namespace’e ait değildir.
 
 <br>
+
+
 
 ### Using React or Vue
 
@@ -1454,6 +1586,8 @@ useEchoModel<User, "App.Models.User">("App.Models.User", userId, ["UserUpdated"]
 
 <br>
 
+
+
 ## Client Events
 
 **Pusher Channels** kullanıyorsanız, “Client Events” özelliğini uygulamanızın ayarlarından etkinleştirmeniz gerekir.
@@ -1479,6 +1613,8 @@ Echo.private(`chat.${roomId}`)
 
 <br>
 
+
+
 ## Notifications
 
 Event broadcasting’i **Laravel Notifications** sistemiyle birleştirerek, kullanıcılar sayfayı yenilemeden bildirimleri gerçek zamanlı olarak alabilirler.
@@ -1497,6 +1633,8 @@ Bu örnekte, `App\Models\User` modeline gönderilen tüm broadcast bildirimleri 
 `routes/channels.php` dosyasında, `App.Models.User.{id}` kanalı için gerekli yetkilendirme callback’i zaten tanımlıdır.
 
 <br>
+
+
 
 ### Stop Listening for Notifications
 

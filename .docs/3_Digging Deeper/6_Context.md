@@ -1,13 +1,19 @@
-````markdown
+
 <br>
+
+
 ## Context
 
 <br>
+
+
 ### Introduction
 
 Laravel’in **context** (bağlam) özellikleri, uygulamanız içinde yürütülen istekler, işler (jobs) ve komutlar boyunca bilgiyi yakalamanıza, almanıza ve paylaşmanıza olanak tanır. Bu yakalanan bilgiler, uygulamanız tarafından yazılan log’lara da dahil edilir. Böylece bir log girdisi yazılmadan önceki kod yürütme geçmişine dair daha derin bir içgörü elde edebilir ve dağıtık bir sistem boyunca yürütme akışlarını izleyebilirsiniz.
 
 <br>
+
+
 ### How it Works
 
 Laravel’in context yeteneklerini anlamanın en iyi yolu, yerleşik loglama özellikleriyle birlikte nasıl çalıştığını görmektir. Başlamak için, **Context** facadesini kullanarak bağlama bilgi ekleyebilirsiniz. Bu örnekte, her gelen istek için istek URL’sini ve benzersiz bir **trace ID**’yi bağlama eklemek için bir middleware kullanıyoruz:
@@ -86,6 +92,8 @@ Processing podcast. {"podcast_id":95} {"url":"https://example.com/login","trace_
 Burada Laravel’in loglama ile ilgili yerleşik context özelliklerine odaklandık, ancak aşağıdaki belgelerde context’in HTTP isteği / job sınırında nasıl bilgi paylaşabildiğini ve log girdilerine yazılmayan gizli context verilerinin nasıl eklendiğini göreceksiniz.
 
 <br>
+
+
 ### Capturing Context
 
 Geçerli bağlamda bilgi depolamak için **Context** facadesinin `add` metodunu kullanabilirsiniz:
@@ -130,6 +138,8 @@ Context::decrement('records_added', 5);
 ```
 
 <br>
+
+
 ### Conditional Context
 
 `when` metodu, belirli bir koşula bağlı olarak bağlama veri eklemek için kullanılabilir. Koşul doğruysa ilk closure, yanlışsa ikinci closure çağrılır:
@@ -146,6 +156,8 @@ Context::when(
 ```
 
 <br>
+
+
 ### Scoped Context
 
 `scope` metodu, belirli bir callback’in yürütülmesi sırasında bağlamı geçici olarak değiştirme ve callback tamamlandığında eski haline döndürme imkânı sağlar. Ayrıca, closure çalışırken bağlama ek veriler (ikinci ve üçüncü argüman olarak) birleştirilebilir.
@@ -184,6 +196,8 @@ Context::allHidden();
 Bir scope içindeki nesne değiştirilirse, bu değişiklik scope dışında da yansıtılır.
 
 <br>
+
+
 ### Stacks
 
 **Context**, "stack" (yığın) oluşturma özelliği sunar; bu, eklenen verilerin sırasıyla saklandığı bir listedir. Bir stack’e bilgi eklemek için `push` metodunu çağırabilirsiniz:
@@ -238,11 +252,15 @@ return Context::stackContains('breadcrumbs', function ($value) {
 });
 ```
 
-````markdown
+
 <br>
+
+
 ## Retrieving Context
 
 <br>
+
+
 ### Retrieving Context Values
 
 Bağlamdan (context) bilgi almak için **Context** facadesinin `get` metodunu kullanabilirsiniz:
@@ -295,6 +313,8 @@ $data = Context::all();
 ```
 
 <br>
+
+
 ### Determining Item Existence
 
 Belirli bir anahtar için bağlamda bir değer olup olmadığını belirlemek amacıyla `has` ve `missing` metodlarını kullanabilirsiniz:
@@ -321,6 +341,8 @@ Context::has('key');
 ```
 
 <br>
+
+
 ### Removing Context
 
 Bir anahtarı ve değerini bağlamdan kaldırmak için `forget` metodunu kullanabilirsiniz:
@@ -343,6 +365,8 @@ Context::forget(['first_key', 'second_key']);
 ```
 
 <br>
+
+
 ### Hidden Context
 
 **Context**, "gizli" veri depolama özelliği sunar. Bu gizli bilgiler log’lara eklenmez ve yukarıda belgelenen veri alma yöntemleriyle erişilemez. **Context**, gizli bağlam verileriyle etkileşime geçmek için farklı bir yöntem seti sağlar:
@@ -377,6 +401,8 @@ Context::forgetHidden(/* ... */);
 ```
 
 <br>
+
+
 ### Events
 
 **Context**, bağlamın “dehydration” (kurutulma) ve “hydration” (yeniden yüklenme) süreçlerine bağlanmanızı sağlayan iki olay (event) yayınlar.
@@ -384,6 +410,8 @@ Context::forgetHidden(/* ... */);
 Bu olayların nasıl kullanılabileceğini göstermek için, uygulamanızdaki bir middleware içinde `app.locale` yapılandırma değerini gelen HTTP isteğinin **Accept-Language** başlığına göre ayarladığınızı varsayalım. **Context** olayları, bu değeri istek sırasında yakalamanıza ve kuyruğa gönderilen job’larda yeniden yüklemenize olanak tanır. Böylece kuyruğa gönderilen bildirimler doğru `app.locale` değeriyle çalışır. Bunu context’in event’leri ve hidden verileriyle başarabilirsiniz.
 
 <br>
+
+
 ### Dehydrating
 
 Bir job kuyruğa gönderildiğinde, bağlamdaki veriler “dehydrate” edilir (yani kurutulur) ve job’un payload’ına eklenir. `Context::dehydrating` metodu, bu süreçte çağrılacak bir closure kaydetmenizi sağlar. Bu closure içinde, kuyruğa gönderilecek job ile paylaşılacak veriler üzerinde değişiklik yapabilirsiniz.
@@ -409,6 +437,8 @@ public function boot(): void
 **Dikkat:** `dehydrating` callback’i içinde **Context** facadesini kullanmayın; bu, mevcut sürecin bağlamını değiştirir. Bunun yerine yalnızca callback’e geçirilen `Repository` nesnesi üzerinde işlem yapın.
 
 <br>
+
+
 ### Hydrated
 
 Bir job kuyruğa alındığında yürütülmeye başladığında, job ile paylaşılan bağlam verileri yeniden yüklenir (hydrate edilir). `Context::hydrated` metodu, bu süreçte çağrılacak bir closure kaydetmenizi sağlar.

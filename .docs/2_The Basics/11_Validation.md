@@ -1,4 +1,4 @@
-````markdown
+
 Doğrulama  
 Giriş  
 Laravel, uygulamanızın gelen verilerini doğrulamak için birkaç farklı yaklaşım sunar. En yaygın olanı, gelen tüm HTTP isteklerinde mevcut olan validate metodunu kullanmaktır. Ancak, doğrulama için diğer yaklaşımları da tartışacağız.
@@ -246,7 +246,7 @@ Aşağıda, doğrulama hataları için JSON yanıt biçimine bir örnek inceleye
 }
 ```
 
-````markdown
+
 Form İstek Doğrulama  
 Form İsteklerinin Oluşturulması  
 Daha karmaşık doğrulama senaryoları için bir “form request” (form isteği) oluşturmak isteyebilirsiniz. Form istekleri, kendi doğrulama ve yetkilendirme mantığını kapsülleyen özel istek sınıflarıdır. Bir form isteği sınıfı oluşturmak için make:request Artisan CLI komutunu kullanabilirsiniz:
@@ -574,7 +574,7 @@ $validator->after([
     },
 ]);
 ```
-````markdown
+
 Doğrulanmış Girdilerle Çalışma  
 Bir form isteği veya manuel olarak oluşturulmuş bir doğrulayıcı örneği kullanarak gelen istek verilerini doğruladıktan sonra, gerçekten doğrulamadan geçmiş verileri almak isteyebilirsiniz. Bu, birkaç farklı şekilde yapılabilir. İlk olarak, bir form isteği veya doğrulayıcı örneği üzerinde validated metodunu çağırabilirsiniz. Bu metod, doğrulamadan geçen verileri içeren bir dizi döndürür:
 
@@ -749,7 +749,7 @@ Bu değeri tanımladıktan sonra, doğrulama kuralı şu hata mesajını üretec
 The credit card number field is required when payment type is credit card.
 ```
 
-````markdown
+
 Mevcut Doğrulama Kuralları  
 Aşağıda mevcut tüm doğrulama kuralları ve işlevleri listelenmiştir:
 
@@ -1135,7 +1135,7 @@ Ayrıca özel bir onay alanı ismi de belirtebilirsiniz. Örneğin:
 
 Bu durumda, `repeat_username` alanının `username` alanıyla eşleşmesi beklenir.
 
-````markdown
+
 ### **contains:foo,bar,...**
 Doğrulama altındaki alan, belirtilen tüm parametre değerlerini içeren bir dizi olmalıdır. Bu kural genellikle bir diziyi implode etmenizi gerektirdiğinden, `Rule::contains` metodu kuralı akıcı bir şekilde oluşturmak için kullanılabilir:
 
@@ -1458,7 +1458,7 @@ Belirtilen başka bir alan mevcut değilse, doğrulama altındaki alan `validate
 Doğrulama altındaki alan, belirtilen veritabanı tablosunda mevcut olmalıdır.
 
 
-````markdown
+
 ### **exists:table,column — Temel Kullanım**
 ```php
 'state' => 'exists:states'
@@ -2031,7 +2031,7 @@ Doğrulama altındaki alanın boyutu belirtilen değere eşit olmalıdır.
 'image' => 'file|size:512';
 ```
 
-````markdown
+
 ### **starts_with:foo,bar,...**
 Doğrulama altındaki alan, belirtilen değerlerden biriyle başlamalıdır.
 
@@ -2424,7 +2424,7 @@ Validator::validate($input, [
 ]);
 ```
 
-````markdown
+
 ### **Dosya Türlerini Doğrulama**
 `types` metodunu çağırırken yalnızca uzantıları belirtmeniz gerekse de, bu metod aslında dosyanın içeriğini okuyarak MIME türünü tahmin eder ve doğrulama işlemini MIME türüne göre yapar.  
 MIME türlerinin ve uzantılarının tam listesini aşağıdaki bağlantıdan bulabilirsiniz:  

@@ -2,14 +2,20 @@
 
 <br>
 
+
+
 ## Concurrency
 
 <br>
+
+
 ### Introduction
 
 Bazen birbirine bağlı olmayan birkaç yavaş görevi yürütmeniz gerekebilir. Birçok durumda, görevleri eşzamanlı olarak yürütmek önemli performans iyileştirmeleri sağlayabilir. Laravel'in **Concurrency** facadesi, closure'ları eşzamanlı olarak yürütmek için basit ve kullanışlı bir API sunar.
 
 <br>
+
+
 ### How it Works
 
 Laravel, verilen closure'ları serileştirip gizli bir **Artisan CLI** komutuna göndererek eşzamanlılık sağlar. Bu komut closure'ları yeniden serileştirir ve kendi PHP süreci içinde çalıştırır. Closure yürütüldükten sonra, elde edilen değer tekrar ana sürece serileştirilir.
@@ -25,6 +31,8 @@ composer require spatie/fork
 `sync` sürücüsü ise genellikle test sırasında, tüm eşzamanlılığı devre dışı bırakmak ve closure'ları ana süreçte sırayla yürütmek istediğiniz durumlarda kullanışlıdır.
 
 <br>
+
+
 ### Running Concurrent Tasks
 
 Eşzamanlı görevler yürütmek için **Concurrency** facadesinin `run` metodunu çağırabilirsiniz. `run` metodu, alt PHP süreçlerinde aynı anda yürütülmesi gereken closure'ların bir dizisini kabul eder:
@@ -52,6 +60,8 @@ php artisan config:publish concurrency
 ```
 
 <br>
+
+
 ### Deferring Concurrent Tasks
 
 Eğer bir dizi closure'ı eşzamanlı olarak yürütmek istiyor, ancak bu closure'lardan dönen sonuçlarla ilgilenmiyorsanız, `defer` metodunu kullanmalısınız. `defer` metodu çağrıldığında, verilen closure'lar hemen yürütülmez. Bunun yerine, Laravel bu closure'ları HTTP yanıtı kullanıcıya gönderildikten sonra eşzamanlı olarak çalıştırır:

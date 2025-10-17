@@ -152,6 +152,8 @@ $this->app->singletonIf(Transistor::class, function (Application $app) {
 ```
 <br>
 
+
+
 ### Singleton Attribute
 
 Alternatif olarak, bir interface veya sınıfı `#[Singleton]` attribute’u ile işaretleyerek, container’a bunun yalnızca bir kez çözümlenmesi gerektiğini belirtebilirsiniz:
@@ -170,6 +172,8 @@ class Transistor
 }
 ```
 <br>
+
+
 
 ### Scoped Singleton Binding
 
@@ -194,6 +198,8 @@ $this->app->scopedIf(Transistor::class, function (Application $app) {
 ```
 <br>
 
+
+
 ### Scoped Attribute
 
 Alternatif olarak, bir interface veya sınıfı `#[Scoped]` attribute’u ile işaretleyerek, container’a bunun yalnızca bir Laravel istek / job yaşam döngüsü boyunca bir kez çözümlenmesi gerektiğini belirtebilirsiniz:
@@ -213,6 +219,8 @@ class Transistor
 ```
 <br>
 
+
+
 ### Instance Binding
 
 Var olan bir nesne örneğini container’a `instance` metodu ile bağlayabilirsiniz. Verilen örnek, container’a yapılan sonraki tüm çağrılarda döndürülür:
@@ -226,6 +234,8 @@ $service = new Transistor(new PodcastParser);
 $this->app->instance(Transistor::class, $service);
 ```
 <br>
+
+
 
 ### Interface’leri Implementasyonlara Bağlama
 
@@ -248,6 +258,8 @@ public function __construct(
 ) {}
 ```
 <br>
+
+
 
 ### Bind Attribute
 
@@ -288,6 +300,8 @@ interface EventPusher
 ```
 <br>
 
+
+
 ### Contextual Binding
 
 Bazen aynı interface’i kullanan iki sınıf olabilir, ancak her birine farklı implementasyonlar enjekte etmek isteyebilirsiniz. Örneğin, iki controller `Illuminate\Contracts\Filesystem\Filesystem` contract’ının farklı implementasyonlarına ihtiyaç duyabilir. Laravel, bu davranışı tanımlamak için basit ve anlaşılır bir arayüz sunar:
@@ -312,6 +326,8 @@ $this->app->when([VideoController::class, UploadController::class])
     });
 ```
 <br>
+
+
 
 ### Contextual Attributes
 
@@ -392,6 +408,8 @@ Route::get('/user', function (#[CurrentUser] User $user) {
 ```
 <br>
 
+
+
 ### Özel Attribute’lar Tanımlama
 
 Kendi contextual attribute’larınızı oluşturmak için `Illuminate\Contracts\Container\ContextualAttribute` contract’ını uygulayabilirsiniz. Container, attribute’unuzun `resolve` metodunu çağırır ve bu metod, sınıfa enjekte edilmesi gereken değeri çözümlemelidir. Aşağıdaki örnekte, Laravel’in yerleşik `Config` attribute’unu yeniden uygulayacağız:
@@ -419,6 +437,8 @@ class Config implements ContextualAttribute
 }
 ```
 <br>
+
+
 
 ### Primitif Değerleri Binding Etme
 
@@ -448,7 +468,7 @@ $this->app->when(ReportAggregator::class)
     ->giveConfig('app.timezone');
 ```
 
-````markdown
+
 Binding Typed Variadics  
 Bazen, bir sınıf variadic bir constructor argümanı kullanarak typed objelerden oluşan bir dizi alabilir:  
 
@@ -507,6 +527,8 @@ $this->app->when(Firewall::class)
 
 <br>
 
+
+
 ### Variadic Tag Dependencies
 
 Bazen bir sınıf, belirli bir sınıfla type-hint edilmiş bir variadic bağımlılığa sahip olabilir (`Report ...$reports`). `needs` ve `giveTagged` metotlarını kullanarak, belirli bir bağımlılık için aynı etiketle container’a kaydedilen tüm binding’leri kolayca enjekte edebilirsiniz:
@@ -547,6 +569,8 @@ $this->app->bind(ReportAnalyzer::class, function (Application $app) {
 
 <br>
 
+
+
 ### Extending Bindings
 
 `extend` metodu, çözümlenen servisleri değiştirmeye (modify) olanak tanır. Örneğin, bir servis çözümlendiğinde, servisi dekore etmek veya yapılandırmak için ek kod çalıştırabilirsiniz.
@@ -560,7 +584,9 @@ $this->app->extend(Service::class, function (Service $service, Application $app)
 
 ---
 
-<br> 
+<br>
+
+ 
 
 ### Resolving
 
@@ -616,6 +642,8 @@ public function __construct(
 
 <br>
 
+
+
 ### Automatic Injection
 
 Alternatif olarak ve önemli biçimde, container tarafından çözümlenen bir sınıfın constructor’ında (controller, event listener, middleware vb.) bağımlılıkları doğrudan type-hint olarak belirtebilirsiniz. Ayrıca, queued job’ların `handle` metodunda da bağımlılıkları type-hint edebilirsiniz.
@@ -649,6 +677,8 @@ class PodcastController extends Controller
 }
 ```
 <br>
+
+
 
 ## Method Invocation and Injection  
 Bazen, bir nesne örneği üzerindeki bir metodu çağırmak isterken, container’ın bu metodun bağımlılıklarını otomatik olarak enjekte etmesini isteyebilirsiniz. Örneğin, aşağıdaki sınıfa bakalım:  
@@ -698,6 +728,8 @@ $result = App::call(function (AppleMusic $apple) {
 
 <br>
 
+
+
 ### Container Events
 
 Service container, her nesne çözümlendiğinde bir event tetikler. Bu olayı `resolving` metodu ile dinleyebilirsiniz:
@@ -720,6 +752,8 @@ Görüldüğü gibi, çözümlenen nesne callback’e geçirilir; böylece, nesn
 ---
 
 <br>
+
+
 
 ### Rebinding
 
@@ -748,6 +782,8 @@ $this->app->bind(PodcastPublisher::class, TransistorPublisher::class);
 ---
 
 <br>
+
+
 
 ### PSR-11
 

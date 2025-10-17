@@ -1,4 +1,4 @@
-````markdown
+
 HTTP Oturumu  
 Giriş  
 HTTP tabanlı uygulamalar durum bilgisi taşımadığı için, oturumlar kullanıcı hakkında bilgileri birden fazla istek boyunca saklamanın bir yolunu sağlar. Bu kullanıcı bilgileri genellikle kalıcı bir depolama alanına / backend’e yerleştirilir ve sonraki isteklerde erişilebilir hale gelir.  
@@ -219,7 +219,7 @@ Oturum ID’sini yeniden oluşturmak ve tüm oturum verilerini tek bir adımda k
 $request->session()->invalidate();
 ```
 
-````markdown
+
 Session Cache  
 Laravel'ın session cache’i, bireysel kullanıcı oturumuna özgü verileri önbelleğe almak için kullanışlı bir yol sağlar. Global uygulama önbelleğinden farklı olarak, session cache verileri her oturum için otomatik olarak izole edilir ve oturum sona erdiğinde veya yok edildiğinde temizlenir. Session cache, `get`, `put`, `remember`, `forget` gibi tüm tanıdık Laravel cache metodlarını destekler, ancak mevcut oturuma göre kapsamlanmıştır.  
 

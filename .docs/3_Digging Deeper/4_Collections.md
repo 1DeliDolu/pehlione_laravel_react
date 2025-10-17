@@ -1,8 +1,12 @@
-````markdown
+
 <br>
+
+
 ## Collections
 
 <br>
+
+
 ### Introduction
 
 `Illuminate\Support\Collection` sınıfı, dizi verileriyle çalışmak için kullanışlı ve akıcı (fluent) bir sarmalayıcı sağlar.  
@@ -20,6 +24,8 @@ Görüldüğü gibi, `Collection` sınıfı, temel diziyi akıcı bir şekilde *
 Genel olarak koleksiyonlar **immutable**’dır; yani her `Collection` metodu tamamen yeni bir `Collection` örneği döndürür.
 
 <br>
+
+
 ### Creating Collections
 
 Yukarıda bahsedildiği gibi, `collect` helper’ı verilen dizi için yeni bir `Illuminate\Support\Collection` örneği döndürür.
@@ -34,6 +40,8 @@ Ayrıca `make` ve `fromJson` metodlarını kullanarak da koleksiyon oluşturabil
 Eloquent sorgularının sonuçları daima `Collection` örnekleri olarak döner.
 
 <br>
+
+
 ### Extending Collections
 
 Koleksiyonlar **"macroable"**’dır; yani çalışma zamanında `Collection` sınıfına yeni metotlar ekleyebilirsiniz.
@@ -62,6 +70,8 @@ $upper = $collection->toUpper();
 Genellikle koleksiyon makrolarınızı bir **service provider**’ın `boot` metodunda tanımlamanız önerilir.
 
 <br>
+
+
 ### Macro Arguments
 
 Gerektiğinde, ek argümanlar kabul eden makrolar da tanımlayabilirsiniz:
@@ -82,6 +92,8 @@ $translated = $collection->toLocale('es');
 ```
 
 <br>
+
+
 ### Available Methods
 
 Koleksiyon dokümantasyonunun geri kalan kısmında, `Collection` sınıfında mevcut olan her metodu tartışacağız.
@@ -107,9 +119,13 @@ Bu sayede, gerektiğinde orijinal koleksiyonu koruyabilirsiniz.
 `whereNotBetween`, `whereNotIn`, `whereNotInStrict`, `whereNotNull`, `whereNull`, `wrap`, `zip`
 
 <br>
+
+
 ## Method Listing
 
 <br>
+
+
 ### after()
 
 `after` metodu, belirtilen öğeden sonraki öğeyi döndürür.
@@ -143,6 +159,8 @@ collect([2, 4, 6, 8])->after(function (int $item, int $key) {
 ```
 
 <br>
+
+
 ### all()
 
 `all` metodu, koleksiyonun temsil ettiği temel diziyi döndürür:
@@ -153,11 +171,15 @@ collect([1, 2, 3])->all();
 ```
 
 <br>
+
+
 ### average()
 
 `average`, `avg` metodunun bir takma adıdır (alias).
 
 <br>
+
+
 ### avg()
 
 `avg` metodu, belirtilen anahtara ait değerlerin ortalamasını döndürür:
@@ -177,6 +199,8 @@ $average = collect([1, 1, 2, 4])->avg();
 ```
 
 <br>
+
+
 ### before()
 
 `before` metodu, `after` metodunun tersidir.
@@ -202,6 +226,8 @@ collect([2, 4, 6, 8])->before(function (int $item, int $key) {
 ```
 
 <br>
+
+
 ### chunk()
 
 `chunk` metodu, koleksiyonu belirtilen boyutta daha küçük koleksiyonlara böler:
@@ -229,6 +255,8 @@ Bu metod özellikle **Bootstrap** gibi grid sistemleriyle çalışırken kullan�
 ```
 
 <br>
+
+
 ### chunkWhile()
 
 `chunkWhile` metodu, verilen callback fonksiyonunun değerlendirmesine göre koleksiyonu birden fazla küçük koleksiyona böler.
@@ -246,6 +274,8 @@ $chunks->all();
 ```
 
 <br>
+
+
 ### collapse()
 
 `collapse` metodu, diziler veya koleksiyonlardan oluşan bir koleksiyonu düzleştirerek tek bir koleksiyon haline getirir:
@@ -264,6 +294,8 @@ $collapsed->all();
 ```
 
 <br>
+
+
 ### collapseWithKeys()
 
 `collapseWithKeys` metodu, dizilerden veya koleksiyonlardan oluşan bir koleksiyonu **anahtarları koruyarak** düzleştirir.
@@ -288,8 +320,10 @@ $collapsed->all();
 ```
 
 
-````markdown
+
 <br>
+
+
 ### collect()
 
 `collect` metodu, mevcut koleksiyondaki öğelerle yeni bir `Collection` örneği döndürür:
@@ -328,6 +362,8 @@ $collection->all();
 `collect()` metodu `Enumerable` sözleşmesinin (contract) bir parçası olduğundan, güvenle bir `Collection` örneği almak için kullanılabilir.
 
 <br>
+
+
 ### combine()
 
 `combine` metodu, koleksiyondaki değerleri anahtar olarak, başka bir dizi veya koleksiyonun değerleriyle birleştirir:
@@ -343,6 +379,8 @@ $combined->all();
 ```
 
 <br>
+
+
 ### concat()
 
 `concat` metodu, verilen dizi veya koleksiyonun değerlerini mevcut koleksiyonun sonuna ekler:
@@ -361,6 +399,8 @@ $concatenated->all();
 Eğer **associative** (anahtar–değer) koleksiyonlardaki anahtarları korumak istiyorsanız, bunun yerine `merge` metodunu kullanın.
 
 <br>
+
+
 ### contains()
 
 `contains` metodu, koleksiyonun belirli bir öğeyi içerip içermediğini kontrol eder.
@@ -409,6 +449,8 @@ $collection->contains('product', 'Bookcase');
 Tersi için, yani bir öğenin **bulunmadığını** kontrol etmek isterseniz `doesntContain` metoduna bakın.
 
 <br>
+
+
 ### containsOneItem()
 
 `containsOneItem` metodu, koleksiyonun yalnızca **tek bir öğe** içerip içermediğini belirler:
@@ -428,12 +470,16 @@ collect([1, 2, 3])->containsOneItem(fn (int $item) => $item === 2);
 ```
 
 <br>
+
+
 ### containsStrict()
 
 Bu metod, `contains` metoduyla aynı imzaya sahiptir; ancak tüm değerleri **"strict" karşılaştırma** kullanarak kontrol eder.
 Bu metodun davranışı, **Eloquent Collection** kullanıldığında farklılık gösterebilir.
 
 <br>
+
+
 ### count()
 
 `count` metodu, koleksiyondaki toplam öğe sayısını döndürür:
@@ -447,6 +493,8 @@ $collection->count();
 ```
 
 <br>
+
+
 ### countBy()
 
 `countBy` metodu, koleksiyondaki değerlerin kaç kez geçtiğini sayar.
@@ -477,6 +525,8 @@ $counted->all();
 ```
 
 <br>
+
+
 ### crossJoin()
 
 `crossJoin` metodu, koleksiyonun değerlerini verilen diziler veya koleksiyonlarla **çapraz birleştirir**, yani tüm olası kombinasyonları döndüren bir **Cartesian product** üretir:
@@ -522,6 +572,8 @@ $matrix->all();
 ```
 
 <br>
+
+
 ### dd()
 
 `dd` metodu, koleksiyondaki öğeleri ekrana yazdırır ve script’in çalışmasını durdurur:
@@ -542,6 +594,8 @@ $collection->dd();
 Eğer script’in çalışmasını durdurmak istemiyorsanız, bunun yerine `dump` metodunu kullanabilirsiniz.
 
 <br>
+
+
 ### diff()
 
 `diff` metodu, koleksiyonu başka bir koleksiyon veya düz bir PHP dizisiyle karşılaştırır ve **yalnızca mevcut koleksiyonda olup diğerinde bulunmayan değerleri** döndürür:
@@ -558,8 +612,10 @@ $diff->all();
 
 Bu metodun davranışı, **Eloquent Collection** kullanıldığında farklılık gösterebilir.
 
-````markdown
+
 <br>
+
+
 ### diffAssoc()
 
 `diffAssoc` metodu, koleksiyonu anahtarlar **ve** değerler temelinde başka bir koleksiyon veya düz bir PHP dizisiyle karşılaştırır.  
@@ -585,6 +641,8 @@ $diff->all();
 ````
 
 <br>
+
+
 ### diffAssocUsing()
 
 `diffAssoc` metodundan farklı olarak, `diffAssocUsing` metodu indeks karşılaştırmaları için kullanıcı tanımlı bir callback fonksiyonu kabul eder:
@@ -611,6 +669,8 @@ Callback fonksiyonu, sırasıyla 0’dan küçük, eşit veya büyük bir tamsay
 Daha fazla bilgi için PHP’nin dahili olarak kullanılan `array_diff_uassoc` fonksiyonunun dökümantasyonuna bakabilirsiniz.
 
 <br>
+
+
 ### diffKeys()
 
 `diffKeys` metodu, koleksiyonu başka bir koleksiyon veya düz PHP dizisiyle **anahtarlarına göre** karşılaştırır.
@@ -638,6 +698,8 @@ $diff->all();
 ```
 
 <br>
+
+
 ### doesntContain()
 
 `doesntContain` metodu, koleksiyonun belirli bir öğeyi **içermediğini** belirler.
@@ -682,11 +744,15 @@ $collection->doesntContain('product', 'Bookcase');
 yani `"2"` string değeri `2` integer değeriyle eşit kabul edilir.
 
 <br>
+
+
 ### doesntContainStrict()
 
 Bu metod, `doesntContain` metoduyla aynı imzaya sahiptir; ancak değerleri **"strict" karşılaştırma** kullanarak kontrol eder.
 
 <br>
+
+
 ### dot()
 
 `dot` metodu, çok boyutlu bir koleksiyonu tek seviyeli hale getirir ve derinliği belirtmek için **dot (.) notasyonu** kullanır:
@@ -702,6 +768,8 @@ $flattened->all();
 ```
 
 <br>
+
+
 ### dump()
 
 `dump` metodu, koleksiyondaki öğeleri ekrana yazdırır:
@@ -722,6 +790,8 @@ $collection->dump();
 Eğer dump işleminden sonra script’in çalışmasını durdurmak isterseniz, bunun yerine `dd` metodunu kullanın.
 
 <br>
+
+
 ### duplicates()
 
 `duplicates` metodu, koleksiyondaki yinelenen (duplicate) değerleri döndürür:
@@ -749,11 +819,15 @@ $employees->duplicates('position');
 ```
 
 <br>
+
+
 ### duplicatesStrict()
 
 Bu metod, `duplicates` metoduyla aynı imzaya sahiptir; ancak değerleri **strict** karşılaştırma kullanarak denetler.
 
 <br>
+
+
 ### each()
 
 `each` metodu, koleksiyondaki her öğe üzerinde gezinir ve her bir öğeyi belirtilen closure’a geçirir:
@@ -777,6 +851,8 @@ $collection->each(function (int $item, int $key) {
 ```
 
 <br>
+
+
 ### eachSpread()
 
 `eachSpread` metodu, koleksiyondaki öğeler üzerinde gezinir ve her bir alt öğeyi parametre olarak callback fonksiyonuna aktarır:
@@ -798,6 +874,8 @@ $collection->eachSpread(function (string $name, int $age) {
 ```
 
 <br>
+
+
 ### ensure()
 
 `ensure` metodu, koleksiyondaki tüm öğelerin belirtilen türde (veya türlerden birinde) olduğunu doğrular.
@@ -818,6 +896,8 @@ return $collection->ensure('int');
 > ⚠️ `ensure` metodu, sonradan farklı türde öğelerin eklenmeyeceğini garanti etmez.
 
 <br>
+
+
 ### every()
 
 `every` metodu, koleksiyondaki tüm öğelerin belirtilen koşulu sağlayıp sağlamadığını doğrular:
@@ -843,6 +923,8 @@ $collection->every(function (int $value, int $key) {
 ```
 
 <br>
+
+
 ### except()
 
 `except` metodu, belirtilen anahtarlara sahip olanlar hariç tüm öğeleri döndürür:
@@ -861,6 +943,8 @@ Bu metodun tersi için `only` metoduna bakabilirsiniz.
 Ayrıca, **Eloquent Collection** kullanıldığında davranışı değişebilir.
 
 <br>
+
+
 ### filter()
 
 `filter` metodu, verilen callback fonksiyonunu kullanarak koleksiyonu filtreler.
@@ -891,6 +975,8 @@ $collection->filter()->all();
 Bu metodun tersi için `reject` metoduna bakın.
 
 <br>
+
+
 ### first()
 
 `first` metodu, belirtilen koşulu sağlayan ilk öğeyi döndürür:
@@ -913,6 +999,8 @@ collect([1, 2, 3, 4])->first();
 ```
 
 <br>
+
+
 ### firstOrFail()
 
 `firstOrFail` metodu `first` metoduyla aynıdır; ancak eşleşme bulunmazsa bir `Illuminate\Support\ItemNotFoundException` hatası fırlatır:
@@ -934,6 +1022,8 @@ collect([])->firstOrFail();
 ```
 
 <br>
+
+
 ### firstWhere()
 
 `firstWhere` metodu, belirtilen **key / value** eşleşmesine sahip ilk öğeyi döndürür:
@@ -968,6 +1058,8 @@ $collection->firstWhere('age');
 ```
 
 <br>
+
+
 ### flatMap()
 
 `flatMap` metodu, koleksiyon üzerinde döner ve her öğeyi verilen closure’a geçirir.
@@ -990,6 +1082,8 @@ $flattened->all();
 ```
 
 <br>
+
+
 ### flatten()
 
 `flatten` metodu, çok boyutlu bir koleksiyonu tek boyutlu hale getirir:
@@ -1043,6 +1137,8 @@ Eğer `depth` belirtilmezse, tüm iç diziler düzleştirilecektir (örneğin: `
 Derinlik değeri, kaç seviyenin düzleştirileceğini belirler.
 
 <br>
+
+
 ### flip()
 
 `flip` metodu, koleksiyonun anahtarlarıyla değerlerini yer değiştirir:
@@ -1058,6 +1154,8 @@ $flipped->all();
 ```
 
 <br>
+
+
 ### forget()
 
 `forget` metodu, belirtilen anahtara (veya anahtarlara) sahip öğeleri koleksiyondan kaldırır:
@@ -1080,6 +1178,8 @@ $collection->forget(['name', 'framework']);
 > Mevcut koleksiyonu **yerinde (in-place)** değiştirir.
 
 <br>
+
+
 ### forPage()
 
 `forPage` metodu, belirtilen sayfa numarasına ve sayfa başına gösterilecek öğe sayısına göre yeni bir koleksiyon döndürür:
@@ -1094,8 +1194,10 @@ $chunk->all();
 // [4, 5, 6]
 ```
 
-````markdown
+
 <br>
+
+
 ### fromJson()
 
 `fromJson` statik metodu, verilen bir JSON string’ini `json_decode` fonksiyonunu kullanarak çözümler ve bu verilerden yeni bir `Collection` örneği oluşturur:
@@ -1113,6 +1215,8 @@ $collection = Collection::fromJson($json);
 ````
 
 <br>
+
+
 ### get()
 
 `get` metodu, belirtilen anahtardaki öğeyi döndürür.
@@ -1148,6 +1252,8 @@ $collection->get('email', function () {
 ```
 
 <br>
+
+
 ### groupBy()
 
 `groupBy` metodu, koleksiyondaki öğeleri belirtilen anahtara göre gruplandırır:
@@ -1243,6 +1349,8 @@ Yukarıdaki örnekte sonuç:
 ```
 
 <br>
+
+
 ### has()
 
 `has` metodu, belirtilen anahtarın koleksiyonda mevcut olup olmadığını belirler:
@@ -1261,6 +1369,8 @@ $collection->has(['amount', 'price']);
 ```
 
 <br>
+
+
 ### hasAny()
 
 `hasAny` metodu, verilen anahtarlardan **herhangi birinin** koleksiyonda mevcut olup olmadığını belirler:
@@ -1276,6 +1386,8 @@ $collection->hasAny(['name', 'price']);
 ```
 
 <br>
+
+
 ### implode()
 
 `implode` metodu, koleksiyondaki değerleri birleştirir.
@@ -1311,6 +1423,8 @@ $collection->implode(function (array $item, int $key) {
 ```
 
 <br>
+
+
 ### intersect()
 
 `intersect` metodu, verilen dizi veya koleksiyonda bulunmayan değerleri orijinal koleksiyondan kaldırır.
@@ -1329,6 +1443,8 @@ $intersect->all();
 > Bu metodun davranışı, **Eloquent Collection** kullanıldığında değişebilir.
 
 <br>
+
+
 ### intersectUsing()
 
 `intersectUsing` metodu, verilen dizi veya koleksiyonla karşılaştırma yaparken özel bir callback kullanır.
@@ -1347,6 +1463,8 @@ $intersect->all();
 ```
 
 <br>
+
+
 ### intersectAssoc()
 
 `intersectAssoc` metodu, koleksiyonu başka bir koleksiyon veya diziyle karşılaştırır ve **her iki** koleksiyonda da mevcut olan **anahtar / değer çiftlerini** döndürür:
@@ -1370,6 +1488,8 @@ $intersect->all();
 ```
 
 <br>
+
+
 ### intersectAssocUsing()
 
 `intersectAssocUsing` metodu, iki koleksiyonun anahtar ve değerlerini karşılaştırır,
@@ -1396,6 +1516,8 @@ $intersect->all();
 ```
 
 <br>
+
+
 ### intersectByKeys()
 
 `intersectByKeys` metodu, belirtilen dizide veya koleksiyonda bulunmayan **anahtarları ve bunlara karşılık gelen değerleri** orijinal koleksiyondan kaldırır:
@@ -1415,6 +1537,8 @@ $intersect->all();
 ```
 
 <br>
+
+
 ### isEmpty()
 
 `isEmpty` metodu, koleksiyon boşsa `true`, değilse `false` döndürür:
@@ -1426,6 +1550,8 @@ collect([])->isEmpty();
 ```
 
 <br>
+
+
 ### isNotEmpty()
 
 `isNotEmpty` metodu, koleksiyon **boş değilse** `true`, boşsa `false` döndürür:
@@ -1437,6 +1563,8 @@ collect([])->isNotEmpty();
 ```
 
 <br>
+
+
 ### join()
 
 `join` metodu, koleksiyondaki değerleri bir string olarak birleştirir.
@@ -1451,6 +1579,8 @@ collect([])->join(', ', ' and '); // ''
 ```
 
 <br>
+
+
 ### keyBy()
 
 `keyBy` metodu, koleksiyonu belirtilen anahtara göre yeniden indeksler.
@@ -1492,6 +1622,8 @@ $keyed->all();
 ```
 
 <br>
+
+
 ### keys()
 
 `keys` metodu, koleksiyondaki tüm anahtarları döndürür:
@@ -1510,6 +1642,8 @@ $keys->all();
 ```
 
 <br>
+
+
 ### last()
 
 `last` metodu, belirtilen koşulu sağlayan son öğeyi döndürür:
@@ -1532,8 +1666,10 @@ collect([1, 2, 3, 4])->last();
 ```
 
 
-````markdown
+
 <br>
+
+
 ### lazy()
 
 `lazy` metodu, koleksiyondaki mevcut öğelerden yeni bir `LazyCollection` örneği döndürür:
@@ -1565,12 +1701,16 @@ Koleksiyonu `LazyCollection`’a dönüştürerek, filtreleme işlemleri sıras�
 Orijinal koleksiyon bellekte kalır, ancak sonraki işlemler **lazy** olarak yürütülür.
 
 <br>
+
+
 ### macro()
 
 `macro` statik metodu, çalışma zamanında `Collection` sınıfına yeni metodlar eklemenizi sağlar.
 Daha fazla bilgi için “Extending Collections” (Koleksiyonları Genişletme) bölümüne bakın.
 
 <br>
+
+
 ### make()
 
 `make` statik metodu, yeni bir `Collection` örneği oluşturur.
@@ -1583,6 +1723,8 @@ $collection = Collection::make([1, 2, 3]);
 ```
 
 <br>
+
+
 ### map()
 
 `map` metodu, koleksiyondaki her öğe üzerinde gezinir ve verilen callback’e aktarır.
@@ -1604,6 +1746,8 @@ $multiplied->all();
 Orijinal koleksiyonu dönüştürmek istiyorsanız, `transform` metodunu kullanın.
 
 <br>
+
+
 ### mapInto()
 
 `mapInto()` metodu, koleksiyon üzerinde gezinir ve her değeri belirtilen sınıfın kurucusuna (constructor) geçirerek yeni bir örnek oluşturur:
@@ -1629,6 +1773,8 @@ $currencies->all();
 ```
 
 <br>
+
+
 ### mapSpread()
 
 `mapSpread` metodu, koleksiyondaki iç içe geçmiş (nested) öğeler üzerinde gezinir ve her bir öğeyi closure’a parametre olarak aktarır.
@@ -1649,6 +1795,8 @@ $sequence->all();
 ```
 
 <br>
+
+
 ### mapToGroups()
 
 `mapToGroups` metodu, koleksiyondaki öğeleri verilen closure’a göre gruplar.
@@ -1680,6 +1828,8 @@ $grouped->get('Sales')->all();
 ```
 
 <br>
+
+
 ### mapWithKeys()
 
 `mapWithKeys` metodu, koleksiyondaki her öğe üzerinde gezinir ve closure’dan dönen key/value çiftlerini kullanarak yeni bir koleksiyon oluşturur.
@@ -1714,6 +1864,8 @@ $keyed->all();
 ```
 
 <br>
+
+
 ### max()
 
 `max` metodu, belirtilen anahtarın maksimum değerini döndürür:
@@ -1732,6 +1884,8 @@ $max = collect([1, 2, 3, 4, 5])->max();
 ```
 
 <br>
+
+
 ### median()
 
 `median` metodu, belirtilen anahtarın **ortanca (median)** değerini döndürür:
@@ -1752,6 +1906,8 @@ $median = collect([1, 1, 2, 4])->median();
 ```
 
 <br>
+
+
 ### merge()
 
 `merge` metodu, verilen dizi veya koleksiyonu mevcut koleksiyonla birleştirir.
@@ -1780,6 +1936,8 @@ $merged->all();
 ```
 
 <br>
+
+
 ### mergeRecursive()
 
 `mergeRecursive` metodu, verilen dizi veya koleksiyonu mevcut koleksiyonla **özyinelemeli (recursive)** olarak birleştirir.
@@ -1800,6 +1958,8 @@ $merged->all();
 ```
 
 <br>
+
+
 ### min()
 
 `min` metodu, belirtilen anahtarın minimum değerini döndürür:
@@ -1815,6 +1975,8 @@ $min = collect([1, 2, 3, 4, 5])->min();
 ```
 
 <br>
+
+
 ### mode()
 
 `mode` metodu, belirtilen anahtarın **mod (en sık tekrar eden değer)** değerini döndürür:
@@ -1839,6 +2001,8 @@ $mode = collect([1, 1, 2, 2])->mode();
 ```
 
 <br>
+
+
 ### multiply()
 
 `multiply` metodu, koleksiyondaki tüm öğelerin belirtilen sayıda kopyasını oluşturur:
@@ -1862,8 +2026,10 @@ $users = collect([
 ```
 
 
-````markdown
+
 <br>
+
+
 ### nth()
 
 `nth` metodu, koleksiyondan her n’inci öğeyi içeren yeni bir koleksiyon döndürür:
@@ -2274,8 +2440,10 @@ $random->all();
 // [1, 2, 3, 4, 5] (rastgele)
 ```
 
-````markdown
+
 <br>
+
+
 ### range()
 
 `range` metodu, belirtilen aralıkta yer alan tam sayılardan oluşan bir koleksiyon döndürür:
@@ -2860,8 +3028,10 @@ $sorted = $collection->sortBy([
 
 ---
 
-````markdown
+
 <br>
+
+
 ### sortByDesc()
 
 `sortByDesc` metodu, `sortBy` ile aynı yapıya sahiptir ancak koleksiyonu **ters sırada (azalan)** sıralar.
@@ -3299,8 +3469,10 @@ $person->toArray();
 İstersen oradan sürdüreyim mi?)
 
 
-````markdown
+
 <br>
+
+
 ### whereIn()
 
 `whereIn` metodu, koleksiyondan belirtilen anahtarın değerinin verilen dizi içinde **olmayan** öğeleri kaldırır:
@@ -3522,6 +3694,8 @@ $zipped->all();
 ---
 
 <br>
+
+
 ## Higher Order Messages
 
 Koleksiyonlar, “**higher order messages**” olarak adlandırılan kısa sözdizimi desteği sunar.
@@ -3553,6 +3727,8 @@ return $users->sum->votes;
 ---
 
 <br>
+
+
 ## Lazy Collections
 
 ### Introduction
@@ -3639,6 +3815,8 @@ Bu sözleşme, her iki sınıfın da aşağıdaki metotlara sahip olmasını sa�
 ---
 
 <br>
+
+
 ## Lazy Collection Methods
 
 ### takeUntilTimeout()
